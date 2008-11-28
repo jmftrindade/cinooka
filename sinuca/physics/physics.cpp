@@ -154,7 +154,19 @@ void Physics::checkTableCollision(Table* t, Ball* b) {
 
 	tableRegion = NONE;
 
-	//TODO implementar a colisão com as bordas da mesa
+	// colisio with x plane
+    if (b->getXPosition() + BALL_RADIUS >= X_DIMENSION) {
+            tableRegion = RIGHT;
+    } else if (b->getXPosition() - BALL_RADIUS <= -X_DIMENSION) {
+            tableRegion = LEFT;
+    } 
+    // colision with z plane
+    else if (b->getZPosition() + BALL_RADIUS >= Z_DIMENSION) {
+            tableRegion = DOWN;
+    } else if (b->getZPosition() - BALL_RADIUS <= -Z_DIMENSION) {
+            tableRegion = UP;
+    }
+    
 }
 
 bool Physics::checkHoleCollision(Table* t, Ball* b, int hole) {

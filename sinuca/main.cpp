@@ -4,9 +4,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef __APPLE__
 #include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
 #include "objects/Game.h"
+#include "objects/Point3d.h"
 
 Game game;
 
@@ -28,10 +33,13 @@ void reshape(int w, int h) {
 	glViewport(0, 0, w, h);
 	gluPerspective(45, 1.0f * w / h, 1, 100);
 
-	glMatrixMode(GL_MODELVIEW);
+	Point3d eye = game.camera.eye;
+    Point3d at = game.camera.at;
+    Point3d up = game.camera.up;
+    glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(0, 40, 13, 0, 0, 0, 0.0f, 1.0f, 0.0f);
-
+    gluLookAt(eye.x,eye.y,eye.z,at.x,at.y,at.z,up.x,up.y,up.z);
+    //gluLookAt(20, 0, 43, 0, 0, 0, 0.0f, 1.0f, 0.0f);
 }
 
 void specialkey(int key, int x, int y) {
@@ -48,6 +56,14 @@ void keyboard(unsigned char key, int x, int y) {
 	glutPostRedisplay();
 }
 
+void mouse(int button, int state, int x, int y) {
+    game.processMouse(x,y,button,state);
+}
+
+void motion(int x, int y) {
+    game.processMotion(x,y);
+}
+
 void init_gl(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE| GLUT_RGBA | GLUT_DEPTH);
@@ -59,19 +75,22 @@ void init_gl(int argc, char **argv) {
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboard);
+	glutMouseFunc(mouse);
+	glutMotionFunc(motion);
 	glutIdleFunc(display);
 	glutSpecialFunc(specialkey);
 
 	glEnable(GL_DEPTH_TEST);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 
 }
 
 int main(int argc, char **argv) {
 
 	init_gl(argc, argv);
-
 	game.initGL();
 
 	glutMainLoop();

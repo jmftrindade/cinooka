@@ -24,7 +24,7 @@ void Ball::draw() {
 
     glBindTexture(GL_TEXTURE_2D, ballTextureId);
 	glColor3f(1.0f,1.0f,1.0f);
-	glutSolidSphere(0.25f,10,10);
+	glutSolidSphere(BALL_RADIUS,10,10);
 
 	glPopMatrix();
 }

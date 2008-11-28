@@ -8,9 +8,10 @@
 #include "physics/physics.h"
 #include "interface/interface.h"
 #include "Timer/Timer.h"
-#include "Shot.h"
-#include "Table.h"
-#include "Ball.h"
+#include "objects/Shot.h"
+#include "objects/Table.h"
+#include "objects/Ball.h"
+#include "camera/camera.h"
 
 #define SPACE_KEY 32
 
@@ -54,9 +55,13 @@ private:
 	void physicsInterface();
 
 public:
+
+    Camera camera;
 	Game();
 	void initGL();
 	void processKey(int key);
+	void processMouse(int x, int y, int button, int state);
+	void processMotion(int x, int y);
 	void loop();
 };
 

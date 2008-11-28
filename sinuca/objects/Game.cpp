@@ -1,5 +1,10 @@
 #include "Game.h"
 
+#if !defined(GLUT_WHEEL_UP)
+#  define GLUT_WHEEL_UP   3
+#  define GLUT_WHEEL_DOWN 4
+#endif
+
 Game::Game() {
 	currentPlayer = 1;
 	initializeGame();
@@ -190,3 +195,40 @@ void Game::processKey(int key) {
 		break;
 	}
 }
+
+void Game::processMouse(int x, int y, int button, int state) {
+    switch(button) {
+    case GLUT_LEFT_BUTTON:
+        if (state == GLUT_DOWN) {
+            camera.is_panning = true;
+            camera.save((float)x,(float)y);
+        } else {
+            camera.is_panning = false;
+        }
+        break;
+    case GLUT_RIGHT_BUTTON:
+        if (state == GLUT_DOWN) {
+            camera.is_rotating = true;
+            camera.save((float)x,(float)y);
+        } else {
+            camera.is_rotating = false;
+        }
+        break;
+    case GLUT_WHEEL_UP:
+        camera.zoom(-2.0);
+        break;
+    case GLUT_WHEEL_DOWN:
+        camera.zoom(2.0);
+    //glutPostRedisplay();
+    }
+    //glutPostRedisplay();
+}
+
+void Game::processMotion(int x, int y) {
+    if (camera.is_panning)
+        camera.pan((float)x,(float)y);
+    if (camera.is_rotating)
+        camera.rotate((float)x,(float)y);
+    //glutPostRedisplay();
+}
+
