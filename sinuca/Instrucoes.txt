@@ -1,0 +1,4 @@
+﻿Quando compilarem e executarem o programa vai estar com diversos erros.
+Os arquivos image.cpp, interface.cpp, Ball.cpp, physics.cpp e main.cpp tiveram funções retiradas.
+As partes estão indicadas com TODOs.
+O trabalho deve ser enviado através de um arquivo compactado, contendo o código-fonte, o executável e todas as DLLs necessárias.
