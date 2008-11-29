@@ -8,24 +8,45 @@
 void Ball::init() {
 	    //TODO carregar a textura de acordo com o numero da bola
         std::ostringstream ballTexturePath;
-        ballTexturePath << "images/" << number;
+        ballTexturePath << "images/" << number << ".sgi";
         ballTextureId = loadTexture((char*) ballTexturePath.str().c_str());
+        ballShinyTextureId = loadTexture((char*) "images/Envroll.rgb");
 }
 
-void Ball::draw() {
+void Ball::draw() {	
 	//Abaixo estão apenas as partes para deslocar e rolar a bola
 	float rotation = SPEED_FACTOR * (speed.getX() * speed.getX() + speed.getZ()
 			* speed.getZ());
+	
+    ballId = gluNewQuadric();
+    gluQuadricNormals(ballId, GL_SMOOTH);                        // Generate Smooth Normals For The Quad
+    gluQuadricTexture(ballId, GL_TRUE);                          // Enable Texture Coords For The Quad    
+    glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);    // Set Up Sphere Mapping
+    glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);    // Set Up Sphere Mapping
 
 	glPushMatrix();
 	glTranslatef(center.getX(), 3.75, center.getZ());
 	glRotatef(rotation, ROTATION_FACTOR*(-speed.getZ()), 0, ROTATION_FACTOR
 	* speed.getX());
-
+	
+	// ball texture
+	glColor3f(1.0f, 1.0f, 1.0f);
     glBindTexture(GL_TEXTURE_2D, ballTextureId);
-	glColor3f(1.0f,1.0f,1.0f);
-	glutSolidSphere(BALL_RADIUS,10,10);
+	gluSphere(ballId, BALL_RADIUS, 32, 16);
+	
+	glBindTexture(GL_TEXTURE_2D, ballShinyTextureId);
+	glColor4f(1.0f, 1.0f, 1.0f, 0.4f);			// Set Color To White With 40% Alpha
+	glEnable(GL_BLEND);							// Enable Blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);			// Set Blending Mode To Mix Based On SRC Alpha
+	glEnable(GL_TEXTURE_GEN_S);					// Enable Sphere Mapping
+	glEnable(GL_TEXTURE_GEN_T);					// Enable Sphere Mapping
 
+	gluSphere(ballId, BALL_RADIUS, 32, 16);		// Draw Another Sphere Using New Texture
+												// Textures Will Mix Creating A MultiTexture Effect (Reflection)
+	glDisable(GL_TEXTURE_GEN_S);				// Disable Sphere Mapping
+	glDisable(GL_TEXTURE_GEN_T);				// Disable Sphere Mapping
+	glDisable(GL_BLEND);						// Disable Blending
+	
 	glPopMatrix();
 }
 

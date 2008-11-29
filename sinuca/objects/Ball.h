@@ -22,6 +22,7 @@ class Ball {
 	friend class BallArray;
 
 private:
+	GLuint ballShinyTextureId;
 	GLuint ballTextureId;
 	GLUquadricObj *ballId;
 

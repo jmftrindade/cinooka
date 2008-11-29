@@ -27,13 +27,51 @@ void Interface::init() {
 }
 
 void Interface::initFloor() {
-	//TODO Carregar textura do chão
+	//FIXME Carregar textura do chão
+    floorId = glGenLists(1);
+    glNewList(floorId, GL_COMPILE_AND_EXECUTE);
+    //floor
+    float floor_area = 30.0;
+    glBindTexture(GL_TEXTURE_2D, floorTextureId);
+
+    glPushMatrix();
+    glTranslatef(0.0, -4.21, 0.0);
+
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(-floor_area, 0, floor_area);
+    glTexCoord2f(0.0, 2.0);
+    glVertex3f(floor_area, 0, floor_area);
+    glTexCoord2f(2.0, 2.0);
+    glVertex3f(floor_area, 0, -floor_area);
+    glTexCoord2f(2.0, 0.0);
+    glVertex3f(-floor_area, 0, -floor_area);
+    glEnd();
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0.0, -4.21, 0.0);
+
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(-floor_area, 0, floor_area);
+    glTexCoord2f(0.0, 2.0);
+    glVertex3f(-floor_area, 0, -floor_area);
+    glTexCoord2f(2.0, 2.0);
+    glVertex3f(-floor_area, floor_area, -floor_area);
+    glTexCoord2f(2.0, 0.0);
+    glVertex3f(-floor_area, floor_area, floor_area);
+    glEnd();
+    glPopMatrix();
+
+    glEndList();	
 }
 
 void Interface::drawEnvironment() {
 	// TODO desenhar chao
     table->draw();
     glBindTexture(GL_TEXTURE_2D, floorTextureId);
+    glCallList(floorId);
 }
 
 void Interface::drawBalls() {

@@ -15,6 +15,12 @@
 
 Game game;
 
+// Light Parameters
+static GLfloat	LightAmb[] = {0.7f, 0.7f, 0.7f, 1.0f};				// Ambient Light
+static GLfloat	LightDif[] = {1.0f, 1.0f, 1.0f, 1.0f};				// Diffuse Light
+static GLfloat	LightPos[] = {4.0f, 4.0f, 6.0f, 1.0f};				// Light Position
+
+
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
@@ -80,11 +86,29 @@ void init_gl(int argc, char **argv) {
 	glutIdleFunc(display);
 	glutSpecialFunc(specialkey);
 
-	glEnable(GL_DEPTH_TEST);
-	glShadeModel(GL_SMOOTH);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_DEPTH_TEST);
+	//glShadeModel(GL_SMOOTH);
+	//glEnable(GL_TEXTURE_2D);
+	//glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHT0);
+	
+    glShadeModel(GL_SMOOTH);                                                        // Enable Smooth Shading
+    //glClearColor(0.2f, 0.5f, 1.0f, 1.0f);                           // Background
+    glClearDepth(1.0f);                                                                     // Depth Buffer Setup
+    //glClearStencil(0);                                                                      // Clear The Stencil Buffer To 0
+    glEnable(GL_DEPTH_TEST);                                                        // Enables Depth Testing
+    glDepthFunc(GL_LEQUAL);                                                         // The Type Of Depth Testing To Do
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);      // Really Nice Perspective Calculations
+    glEnable(GL_TEXTURE_2D);                                                        // Enable 2D Texture Mapping
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmb);                     // Set The Ambient Lighting For Light0
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDif);                     // Set The Diffuse Lighting For Light0
+    glLightfv(GL_LIGHT0, GL_POSITION, LightPos);            // Set The Position For Light0
+
+    glEnable(GL_LIGHT0);                                                            // Enable Light 0
+    glEnable(GL_LIGHTING);                                                          // Enable Lighting
+	
+
 
 }
 
