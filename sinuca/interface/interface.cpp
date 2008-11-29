@@ -23,47 +23,101 @@ void Interface::init() {
 		b->draw();
 	}
 	floorTextureId = loadTexture((char*) "images/floor.sgi");
-	initFloor();
+	initFloorAndWalls();
 }
 
-void Interface::initFloor() {
-	//FIXME Carregar textura do chão
-    floorId = glGenLists(1);
-    glNewList(floorId, GL_COMPILE_AND_EXECUTE);
+void Interface::initFloorAndWalls() {
     //floor
-    float floor_area = 40.0;
+    float size = 60.0;
+    floorAndWallsId = glGenLists(1);
+    glNewList(floorAndWallsId, GL_COMPILE_AND_EXECUTE);
     glBindTexture(GL_TEXTURE_2D, floorTextureId);
 
     glPushMatrix();
     glTranslatef(0.0, -4.21, 0.0);
 
+    // chao
     glBegin(GL_QUADS);
+    glNormal3f( 0.0f, 1.0f, 0.0f); // normal apontando pra cima
     glTexCoord2f(0.0, 0.0);
-    glVertex3f(-floor_area, 0, floor_area);
+    glVertex3f(-size, 0, size);
     glTexCoord2f(0.0, 2.0);
-    glVertex3f(floor_area, 0, floor_area);
+    glVertex3f(size, 0, size);
     glTexCoord2f(2.0, 2.0);
-    glVertex3f(floor_area, 0, -floor_area);
+    glVertex3f(size, 0, -size);
     glTexCoord2f(2.0, 0.0);
-    glVertex3f(-floor_area, 0, -floor_area);
+    glVertex3f(-size, 0, -size);
     glEnd();
     glPopMatrix();
 
+    // parede de tras
     glPushMatrix();
     glTranslatef(0.0, -4.21, 0.0);
 
     glBegin(GL_QUADS);
+    glNormal3f( 1.0f, 0.0f, 0.0f); // normal X
     glTexCoord2f(0.0, 0.0);
-    glVertex3f(-floor_area, 0, floor_area);
+    glVertex3f(-size, 0, size);
     glTexCoord2f(0.0, 2.0);
-    glVertex3f(-floor_area, 0, -floor_area);
+    glVertex3f(-size, 0, -size);
     glTexCoord2f(2.0, 2.0);
-    glVertex3f(-floor_area, floor_area, -floor_area);
+    glVertex3f(-size, size, -size);
     glTexCoord2f(2.0, 0.0);
-    glVertex3f(-floor_area, floor_area, floor_area);
+    glVertex3f(-size, size, size);
     glEnd();
     glPopMatrix();
+    
+    // parede da direita
+    glPushMatrix();
+    glTranslatef(0.0, -4.21, 0.0);
 
+    glBegin(GL_QUADS);
+    glNormal3f( 0.0f, 0.0f, -1.0f); // normal -Z
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(-size, size, size);
+    glTexCoord2f(0.0, 2.0);
+    glVertex3f(size, size, size);
+    glTexCoord2f(2.0, 2.0);
+    glVertex3f(size, 0, size);
+    glTexCoord2f(2.0, 0.0);
+    glVertex3f(-size, 0, size);
+    glEnd();
+    glPopMatrix();
+    
+    // parede da frente
+    glPushMatrix();
+    glTranslatef(0.0, -4.21, 0.0);
+
+    glBegin(GL_QUADS);
+    glNormal3f(-1.0f, 0.0f, 0.0f); // normal -X
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(size, size, size);
+    glTexCoord2f(0.0, 2.0);
+    glVertex3f(size, size, -size);
+    glTexCoord2f(2.0, 2.0);
+    glVertex3f(size, 0, -size);
+    glTexCoord2f(2.0, 0.0);
+    glVertex3f(size, 0, size);
+    glEnd();
+    glPopMatrix();
+    
+    // parede da esquerda
+    glPushMatrix();
+    glTranslatef(0.0, -4.21, 0.0);
+
+    glBegin(GL_QUADS);
+    glNormal3f( 0.0f, 0.0f, 1.0f); // normal Z
+    glTexCoord2f(0.0, 0.0);
+    glVertex3f(size, size, -size);
+    glTexCoord2f(0.0, 2.0);
+    glVertex3f(-size, size, -size);
+    glTexCoord2f(2.0, 2.0);
+    glVertex3f(-size, 0, -size);
+    glTexCoord2f(2.0, 0.0);
+    glVertex3f(size, 0, -size);
+    glEnd();
+    glPopMatrix();
+    
     glEndList();	
 }
 
@@ -71,7 +125,7 @@ void Interface::drawEnvironment() {
 	// TODO desenhar chao
     table->draw();
     glBindTexture(GL_TEXTURE_2D, floorTextureId);
-    glCallList(floorId);
+    glCallList(floorAndWallsId);
 }
 
 void Interface::drawBalls() {

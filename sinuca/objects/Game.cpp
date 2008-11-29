@@ -1,11 +1,26 @@
 #include "Game.h"
+#include <stdio.h>
 
 #if !defined(GLUT_WHEEL_UP)
 #  define GLUT_WHEEL_UP   3
 #  define GLUT_WHEEL_DOWN 4
 #endif
 
+Player::Player() {
+    p_id = 1;
+    final = false;
+    total_balls = 7;
+}
+
+Player::Player(int id, int total) {
+    p_id = id;
+    final = false;
+    total_balls = total;
+}
+
 Game::Game() {
+    P1 = Player(1,7);
+    P2 = Player(1,7);
 	currentPlayer = 1;
 	initializeGame();
 }
@@ -15,6 +30,9 @@ void Game::initGL() {
 }
 
 void Game::initializeGame() {
+    currentPlayer = 1;
+    printf("current player: %d\n",currentPlayer);
+    cueBall_collided = false;
 	mode = DIRECTION;
 	ba.initializeBallArray(NUM_BALLS);
 
@@ -63,7 +81,85 @@ bool Game::turnEnded() {
 			}
 		}
 	}
+    processEnd();
+    currentPlayer = op_id(currentPlayer);
+    printf("current player: %d\n",currentPlayer);
+    cueBall_collided = false;
+    printf("total 1: %d  total 2: %d\n",P1.total_balls,P2.total_balls);
 	return true;
+}
+
+void Game::processEnd() {
+    if (currentPlayer == 1) {
+        if ((ball_hit > 8) || (!cueBall_collided) || ((ball_hit == 8) && (P1.total_balls != 0))) {
+            printf("ball hit: %d \ncollided: %b \ntotal: %d \n)",ball_hit,cueBall_collided,P1.total_balls);
+            if(!illegalMove(1))
+                processEndGame(2);
+        }
+        if (!ba.getBall(8)->inGame()) {
+            if (P1.total_balls == 0)
+                processEndGame(1);
+            else
+                processEndGame(2);
+        }
+    }
+    if (currentPlayer == 2) {
+        if ((ball_hit < 8) || (!cueBall_collided) || ((ball_hit == 8) && (P2.total_balls != 0))) {
+            if(!illegalMove(2))
+                processEndGame(1);
+        }
+        if (!ba.getBall(8)->inGame()) {
+            if (P1.total_balls == 0)
+                processEndGame(2);
+            else
+                processEndGame(1);
+        }
+    }
+    Ball* b;
+    int balls1 = 0;
+    int balls2 = 0;
+    for (int i = 1; i < 16; i++) {
+        b = ba.getBall(i);
+        if (b->inGame()){
+            if (i < 8)
+                balls1++;
+            if (i > 8)
+                balls2++;
+        }
+    }
+    P1.total_balls = balls1;
+    P2.total_balls = balls2;
+}
+
+bool Game::illegalMove(int pl) {
+    printf("illegal move\n");
+    if (pl == 1) {
+        Ball* b;
+        for (int i = 9; i < 16; i++) {
+            b = ba.getBall(i);
+            if (b->inGame()) {
+                b->kill();
+                return true;
+            }
+        }
+        return false;
+    }
+    if (pl == 2) {
+        Ball* b;
+        for (int i = 1; i < 8; i++) {
+            b = ba.getBall(i);
+            if (b->inGame()) {
+                b->kill();
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+void Game::processEndGame(int pl) {
+    mode = FIM;
+    printf("acabou, jogador vencedor: %d\n",pl);
 }
 
 bool Game::checkCueBall() {
@@ -108,9 +204,20 @@ void Game::physicsInterface() {
 			while (physics.hasCollisions()) {
 				otherBall = ba.getBall(physics.getCollision());
 				physics.ballCollision(myBall, otherBall);
+				if ((myBall == cueBall) and (!cueBall_collided)) {
+				    ball_hit = otherBall->getNumber();
+                    printf("bola branca bateu na %d\n",ball_hit);
+                    cueBall_collided = true;
+				}
 			}
 		}
 	}
+}
+
+int Game::op_id(int pl) {
+    if (pl == 1)
+        return 2;
+    return 1;
 }
 
 void Game::setDirection(int key) {
@@ -153,9 +260,13 @@ void Game::applyPhysics() {
 		physicsInterface();
 	} else {
 		if(isOver()){
-			initializeGame();
+		    if (mode != FIM)
+                initializeGame();
 		}
-		mode = DIRECTION;
+		else {
+		    if (mode != FIM)
+                mode = DIRECTION;
+		}
 	}
 }
 
@@ -191,6 +302,10 @@ void Game::processKey(int key) {
 	case SHOT:
 		executeShot(key);
 		break;
+    case FIM:
+        if (key == GLUT_KEY_F2)
+            initializeGame();
+        break;
 	default:
 		break;
 	}

@@ -38,6 +38,7 @@
 #include <GL/glut.h>
 #endif
 #include "interface/image.h"
+#include "interface/texture.h"
 #include "Point.h"
 
 class Table {

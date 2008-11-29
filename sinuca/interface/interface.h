@@ -27,8 +27,10 @@ private:
 
 	GLuint floorTextureId;
 	GLuint floorId;
+	GLuint floorAndWallsId;
 
-	void initFloor();
+	//void initFloor();
+	void initFloorAndWalls();
 public:
 	Interface();
 	~Interface();

@@ -154,7 +154,7 @@ void Physics::checkTableCollision(Table* t, Ball* b) {
 
 	tableRegion = NONE;
 
-	// colisio with x plane
+	// colision with x plane
     if (b->getXPosition() + BALL_RADIUS >= X_DIMENSION) {
             tableRegion = RIGHT;
     } else if (b->getXPosition() - BALL_RADIUS <= -X_DIMENSION) {

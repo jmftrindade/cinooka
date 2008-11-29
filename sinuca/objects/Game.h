@@ -11,7 +11,14 @@
 #include "objects/Shot.h"
 #include "objects/Table.h"
 #include "objects/Ball.h"
-#include "camera/camera.h"
+#include "camera/Camera.h"
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#include <OpenGL/gl.h>
+#else
+#include <GL/glut.h>
+#include <GL/gl.h>
+#endif
 
 #define SPACE_KEY 32
 
@@ -19,12 +26,27 @@
 #define NUM_BALLS 16 /*de 0(branca) a 9*/
 
 enum MODE {
-	DIRECTION, SHOT, PHYSICS
+	DIRECTION, SHOT, PHYSICS, FIM
+};
+
+struct Player {
+    int p_id;
+    bool final;
+    int total_balls;
+
+    Player();
+    Player(int id, int total);
 };
 
 class Game {
 
 private:
+    //NOSSAS
+    Player P1;
+    Player P2;
+    bool cueBall_collided;
+    int ball_hit;
+    //FIM DAS NOSSAS
 	int currentPlayer;
 	Shot shot;
 
@@ -50,10 +72,14 @@ private:
 	void drawShot();
 	void drawSelection();
 	bool turnEnded();
+	void processEnd();
+	bool illegalMove(int pl);
+	void processEndGame(int pl);
 	bool isOver();
 	bool checkCueBall();
 	void respawnCueBall();
 	void physicsInterface();
+	int op_id(int pl);
 
 public:
 
