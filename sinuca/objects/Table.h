@@ -43,6 +43,7 @@
 class Table {
 
 private:
+	GLuint legTableTextureId;
 	GLuint upTableTextureId;
 	GLuint tableTextureId;
 	GLuint tableId;

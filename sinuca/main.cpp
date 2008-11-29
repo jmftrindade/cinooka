@@ -37,7 +37,7 @@ void reshape(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, w, h);
-	gluPerspective(45, 1.0f * w / h, 1, 100);
+	gluPerspective(45, 1.0f * w / h, 1, 200);
 
 	Point3d eye = game.camera.eye;
     Point3d at = game.camera.at;
@@ -59,6 +59,14 @@ void keyboard(unsigned char key, int x, int y) {
 
 	if (key == 32)
 		game.processKey(32);
+	
+	if (key == 'o') {
+		game.camera.zoom(-2.0);
+	}
+	
+	if (key == 'l') {
+		game.camera.zoom(2.0);
+	}
 	glutPostRedisplay();
 }
 
@@ -72,7 +80,7 @@ void motion(int x, int y) {
 
 void init_gl(int argc, char **argv) {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE| GLUT_RGBA | GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
 
 	glutCreateWindow("Sinuca");
@@ -86,27 +94,20 @@ void init_gl(int argc, char **argv) {
 	glutIdleFunc(display);
 	glutSpecialFunc(specialkey);
 
-	//glEnable(GL_DEPTH_TEST);
-	//glShadeModel(GL_SMOOTH);
-	//glEnable(GL_TEXTURE_2D);
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
-	
-    glShadeModel(GL_SMOOTH);                                                        // Enable Smooth Shading
-    //glClearColor(0.2f, 0.5f, 1.0f, 1.0f);                           // Background
-    glClearDepth(1.0f);                                                                     // Depth Buffer Setup
-    //glClearStencil(0);                                                                      // Clear The Stencil Buffer To 0
-    glEnable(GL_DEPTH_TEST);                                                        // Enables Depth Testing
-    glDepthFunc(GL_LEQUAL);                                                         // The Type Of Depth Testing To Do
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);      // Really Nice Perspective Calculations
-    glEnable(GL_TEXTURE_2D);                                                        // Enable 2D Texture Mapping
+	// Iluminacao
+    glShadeModel(GL_SMOOTH);                            // Enable Smooth Shading
+    glClearDepth(1.0f);                                 // Depth Buffer Setup
+    glEnable(GL_DEPTH_TEST);                            // Enables Depth Testing
+    glDepthFunc(GL_LEQUAL);                             // The Type Of Depth Testing To Do
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Really Nice Perspective Calculations
+    glEnable(GL_TEXTURE_2D);                            // Enable 2D Texture Mapping
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmb);                     // Set The Ambient Lighting For Light0
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDif);                     // Set The Diffuse Lighting For Light0
-    glLightfv(GL_LIGHT0, GL_POSITION, LightPos);            // Set The Position For Light0
+    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmb);         // Set The Ambient Lighting For Light0
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDif);         // Set The Diffuse Lighting For Light0
+    glLightfv(GL_LIGHT0, GL_POSITION, LightPos);        // Set The Position For Light0
 
-    glEnable(GL_LIGHT0);                                                            // Enable Light 0
-    glEnable(GL_LIGHTING);                                                          // Enable Lighting
+    glEnable(GL_LIGHT0);                                // Enable Light 0
+    glEnable(GL_LIGHTING);                              // Enable Lighting
 	
 
 

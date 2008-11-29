@@ -31,7 +31,7 @@ void Interface::initFloor() {
     floorId = glGenLists(1);
     glNewList(floorId, GL_COMPILE_AND_EXECUTE);
     //floor
-    float floor_area = 30.0;
+    float floor_area = 40.0;
     glBindTexture(GL_TEXTURE_2D, floorTextureId);
 
     glPushMatrix();

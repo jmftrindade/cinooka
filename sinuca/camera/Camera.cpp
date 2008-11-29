@@ -47,8 +47,8 @@ void Camera::zoom(float x){
     R += x;
     if (R < 23.0)
         R = 23.0;
-    if (R > 67.0)
-        R = 67.0;
+    if (R > 47.0)
+        R = 47.0;
     eye = transf_coord();
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

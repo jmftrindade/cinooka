@@ -16,6 +16,7 @@ void Table::init() {
 
 	tableTextureId = loadTexture((char*) "images/table.sgi");
 	upTableTextureId = loadTexture((char*) "images/up.sgi");
+	legTableTextureId = loadTexture((char*) "images/xtable.sgi");
 
 	glBindTexture(GL_TEXTURE_2D, tableTextureId);
 
@@ -172,6 +173,43 @@ void Table::init() {
 	glTexCoord2f(1.0, 0.0);
 	glVertex3f(-X_DIMENSION, 3.48, -Z_DIMENSION);
 	glEnd();
+	
+	// draw legs
+	glBindTexture(GL_TEXTURE_2D, legTableTextureId);
+    glPushMatrix();
+    glScalef(1.0, 8.0, 1.0);
+    glPushMatrix();
+    glTranslatef(0.0, -0.1, Z_DIMENSION - 1);
+    glutSolidCube(1);
+    glPopMatrix();
+
+/*    glPushMatrix();
+    glTranslatef(-X_DIMENSION + 1, -0.1, -Z_DIMENSION + 1);
+    glutSolidCube(1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(X_DIMENSION - 1, -0.1, -Z_DIMENSION + 1);
+    glutSolidCube(1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(-X_DIMENSION + 1, -0.1, Z_DIMENSION - 1);
+    glutSolidCube(1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0.0, -0.1, Z_DIMENSION - 1);
+    glutSolidCube(1);
+    glPopMatrix();
+
+    glPushMatrix();
+    glTranslatef(0.0, -0.1, -Z_DIMENSION + 1);
+    glutSolidCube(1);
+    glPopMatrix();*/
+
+    glPopMatrix();
+	
 
 	//buracos
 	GLUquadricObj* quadricHole;
