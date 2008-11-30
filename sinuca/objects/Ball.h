@@ -15,6 +15,7 @@
 #include <GL/glut.h>
 #endif
 #include "interface/image.h"
+#include "interface/texture.h"
 #include "Point.h"
 
 class Ball {
@@ -22,7 +23,8 @@ class Ball {
 	friend class BallArray;
 
 private:
-	GLuint ballShinyTextureId;
+	GLuint ballSphereMapTexId;
+	GLuint ballLightFlareTexId;	
 	GLuint ballTextureId;
 	GLUquadricObj *ballId;
 

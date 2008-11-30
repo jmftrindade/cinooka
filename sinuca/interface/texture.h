@@ -29,6 +29,8 @@ of course you may need to change the makefile
  * This function loads a bitmap file and return the OpenGL reference ID to use that texture
  *
  *********************************************************/
+#ifndef _TEXTURE
+#define _TEXTURE
 
 extern int LoadBitmap(char *filename);
 
@@ -47,3 +49,5 @@ typedef struct                       /**** BMP file info structure ****/
     unsigned int   biClrImportant;   /* Number of important colors */
     char *data;
     } BITMAPINFOHEADER;
+    
+#endif

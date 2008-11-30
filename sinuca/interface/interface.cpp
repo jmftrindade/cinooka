@@ -22,7 +22,9 @@ void Interface::init() {
 		b->init();
 		b->draw();
 	}
-	floorTextureId = loadTexture((char*) "images/floor.sgi");
+	//floorTextureId = loadTexture((char*) "images/floor.sgi");
+	floorTextureId = LoadBitmap((char*) "images/red_carpet.bmp");
+	cueTextureId = LoadBitmap((char*) "images/wall_cue.bmp");
 	initFloorAndWalls();
 }
 
@@ -41,11 +43,11 @@ void Interface::initFloorAndWalls() {
     glNormal3f( 0.0f, 1.0f, 0.0f); // normal apontando pra cima
     glTexCoord2f(0.0, 0.0);
     glVertex3f(-size, 0, size);
-    glTexCoord2f(0.0, 2.0);
+    glTexCoord2f(0.0, 10.0);
     glVertex3f(size, 0, size);
-    glTexCoord2f(2.0, 2.0);
+    glTexCoord2f(10.0, 10.0);
     glVertex3f(size, 0, -size);
-    glTexCoord2f(2.0, 0.0);
+    glTexCoord2f(10.0, 0.0);
     glVertex3f(-size, 0, -size);
     glEnd();
     glPopMatrix();
@@ -67,7 +69,9 @@ void Interface::initFloorAndWalls() {
     glEnd();
     glPopMatrix();
     
+    
     // parede da direita
+    glBindTexture(GL_TEXTURE_2D, floorTextureId);
     glPushMatrix();
     glTranslatef(0.0, -4.21, 0.0);
 

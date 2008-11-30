@@ -8,6 +8,7 @@
 #include <GL/glut.h>
 #endif
 #include "interface/image.h"
+#include "interface/texture.h"
 #include "objects/Point.h"
 
 #define INITIAL_DISTANCE 0.3

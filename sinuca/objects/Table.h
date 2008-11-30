@@ -15,7 +15,7 @@
 //
 
 
-#define HOLE_RADIUS 0.5
+#define HOLE_RADIUS 0.6
 
 //Centro da mesa
 #define CENTER_X 0.0
@@ -27,8 +27,8 @@
 
 #define TABLE_SPACE 1.0
 
-#define HOLE_AREA_X 0.5
-#define HOLE_AREA_Z 0.5
+#define HOLE_AREA_X 0.6
+#define HOLE_AREA_Z 0.6
 #define X_DIMENSION (CENTER_X + X_LENGTH/2.0)
 #define Z_DIMENSION (CENTER_Z + Z_LENGTH/2.0)
 
@@ -39,6 +39,7 @@
 #endif
 #include "interface/image.h"
 #include "interface/texture.h"
+#include "interface/material_light.h"
 #include "Point.h"
 
 class Table {

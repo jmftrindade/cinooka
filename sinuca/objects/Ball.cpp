@@ -8,9 +8,10 @@
 void Ball::init() {
 	    //TODO carregar a textura de acordo com o numero da bola
         std::ostringstream ballTexturePath;
-        ballTexturePath << "images/" << number << ".sgi";
-        ballTextureId = loadTexture((char*) ballTexturePath.str().c_str());
-        ballShinyTextureId = loadTexture((char*) "images/Envroll.rgb");
+        ballTexturePath << "images/" << number << ".bmp";
+        ballTextureId = LoadBitmap((char*) ballTexturePath.str().c_str());
+        ballSphereMapTexId = LoadBitmap((char*) "images/sphere_map.bmp");
+        //ballLightFlareTexId = LoadBitmap((char*) "images/lightflare.bmp");
 }
 
 void Ball::draw() {	
@@ -25,7 +26,7 @@ void Ball::draw() {
     glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);    // Set Up Sphere Mapping
 
 	glPushMatrix();
-	glTranslatef(center.getX(), 3.75, center.getZ());
+	glTranslatef(center.getX(), 3.5 + BALL_RADIUS, center.getZ());
 	glRotatef(rotation, ROTATION_FACTOR*(-speed.getZ()), 0, ROTATION_FACTOR
 	* speed.getX());
 	
@@ -34,7 +35,7 @@ void Ball::draw() {
     glBindTexture(GL_TEXTURE_2D, ballTextureId);
 	gluSphere(ballId, BALL_RADIUS, 32, 16);
 	
-	glBindTexture(GL_TEXTURE_2D, ballShinyTextureId);
+	glBindTexture(GL_TEXTURE_2D, ballSphereMapTexId);
 	glColor4f(1.0f, 1.0f, 1.0f, 0.4f);			// Set Color To White With 40% Alpha
 	glEnable(GL_BLEND);							// Enable Blending
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);			// Set Blending Mode To Mix Based On SRC Alpha
@@ -43,6 +44,11 @@ void Ball::draw() {
 
 	gluSphere(ballId, BALL_RADIUS, 32, 16);		// Draw Another Sphere Using New Texture
 												// Textures Will Mix Creating A MultiTexture Effect (Reflection)
+	/*glBindTexture(GL_TEXTURE_2D, ballLightFlareTexId);
+	glColor4f(1.0f, 1.0f, 1.0f, 0.4f);			// Set Color To White With 40% Alpha
+
+	gluSphere(ballId, BALL_RADIUS, 32, 16);		// Draw Another Sphere Using New Texture
+	*/
 	glDisable(GL_TEXTURE_GEN_S);				// Disable Sphere Mapping
 	glDisable(GL_TEXTURE_GEN_T);				// Disable Sphere Mapping
 	glDisable(GL_BLEND);						// Disable Blending
@@ -205,8 +211,8 @@ void BallArray::initializeBallArray(int totalBalls) {
 
 	for (i = 0; i < 5; i++) {
 		for (j = 0; j <= i; j++) {
-			v.setX(i * 0.5 + 7.5);
-			v.setZ((i * 0.5) - (j * 0.5) - 0.55);
+			v.setX(i * BALL_RADIUS*2 + 7.5);
+			v.setZ((i * BALL_RADIUS*2) - (j * BALL_RADIUS*2) - 0.55);
 			array[1 + k].setPosition(&v);
 			k++;
 		}

@@ -16,9 +16,10 @@
 Game game;
 
 // Light Parameters
-static GLfloat	LightAmb[] = {0.7f, 0.7f, 0.7f, 1.0f};				// Ambient Light
+static GLfloat	LightAmb[] = {1.0f, 1.0f, 1.0f, 1.0f};				// Ambient Light
 static GLfloat	LightDif[] = {1.0f, 1.0f, 1.0f, 1.0f};				// Diffuse Light
 static GLfloat	LightPos[] = {4.0f, 4.0f, 6.0f, 1.0f};				// Light Position
+static GLfloat	SpecRef[] = {1.0f, 1.0f, 1.0f, 1.0f};				// Material color
 
 
 void display() {
@@ -108,7 +109,11 @@ void init_gl(int argc, char **argv) {
 
     glEnable(GL_LIGHT0);                                // Enable Light 0
     glEnable(GL_LIGHTING);                              // Enable Lighting
-	
+
+    /*glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    glEnable(GL_COLOR_MATERIAL);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, SpecRef);
+    glMateriali(GL_FRONT, GL_SHININESS, 128);*/
 
 
 }
