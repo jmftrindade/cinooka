@@ -1,4 +1,4 @@
-#include "camera.h"
+#include "Camera.h"
 
 Camera::Camera(){
     at = Point3d(0.0,0.0,0.0);

@@ -48,6 +48,6 @@ typedef struct                       /**** BMP file info structure ****/
     unsigned int   biClrUsed;        /* Number of colors used */
     unsigned int   biClrImportant;   /* Number of important colors */
     char *data;
-    } BITMAPINFOHEADER;
+    } bitmapinfoheader;
     
 #endif
