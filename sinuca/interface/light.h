@@ -11,11 +11,15 @@
 #   include <GL/glu.h>
 #endif
 
+#define SHADOW_PLANE_FLOOR 0
+#define SHADOW_PLANE_TABLE 1
+
 extern void setWoodenMaterial();
 extern void setMetallicMaterial();
 extern void buildShadowMatrix( float fMatrix[16], float fLightPos[4], float fPlane[4] );
-extern GLfloat* getShadowMatrix();
+extern GLfloat* getShadowMatrix(int planeQuad);
 extern void findPlane( GLfloat plane[4], GLfloat v0[3], GLfloat v1[3], GLfloat v2[3]);
 	
+
 
 #endif /* _MAT_LIGHT */

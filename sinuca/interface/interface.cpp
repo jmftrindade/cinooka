@@ -39,7 +39,8 @@ void Interface::initFloorAndWalls() {
     glPushMatrix();
     glTranslatef(0.0, -5.0, 0.0);
     
-    glColor3f(1.0f, 0.0f, 0.0f);
+    // set floor and walls color
+    glColor3f(0.2f, 0.2f, 0.2f);
     
     // chao
     glBegin(GL_QUADS);

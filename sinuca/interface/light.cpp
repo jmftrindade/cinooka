@@ -22,13 +22,22 @@ struct Vertex
     float x, y, z;
 };
 
+Vertex g_tableQuad[] =
+{		
+    { 0.0f, 1.0f,  0.0f, -X_DIMENSION, 3.49, Z_DIMENSION },
+    { 0.0f, 1.0f,  0.0f,  X_DIMENSION, 3.49, Z_DIMENSION },
+    { 0.0f, 1.0f,  0.0f,  X_DIMENSION, 3.49, -Z_DIMENSION },
+    { 0.0f, 1.0f,  0.0f, -X_DIMENSION, 3.49, -Z_DIMENSION },
+};
+
 Vertex g_floorQuad[] =
 {		
-    { 0.0f, 1.0f,  0.0f, -X_DIMENSION, 3.48, Z_DIMENSION },
-    { 0.0f, 1.0f,  0.0f,  X_DIMENSION, 3.48, Z_DIMENSION },
-    { 0.0f, 1.0f,  0.0f,  X_DIMENSION, 3.48, -Z_DIMENSION },
-    { 0.0f, 1.0f,  0.0f, -X_DIMENSION, 3.48, -Z_DIMENSION },
+    { 0.0f, 1.0f,  0.0f, -60.0, 0.1,  60.0 },
+    { 0.0f, 1.0f,  0.0f,  60.0, 0.1,  60.0 },
+    { 0.0f, 1.0f,  0.0f,  60.0, 0.1, -60.0},
+    { 0.0f, 1.0f,  0.0f, -60.0, 0.1, -60.0},
 };
+
 
 /* ambient, diffuse and specular reflection; low shininess */
 void setWoodenMaterial() {
@@ -111,22 +120,39 @@ void buildShadowMatrix( float fMatrix[16], float fLightPos[4], float fPlane[4] )
     fMatrix[15] = dotp - fLightPos[3] * fPlane[3];
 }
 
-GLfloat* getShadowMatrix() {
+GLfloat* getShadowMatrix(int planeQuad) {
     GLfloat shadowPlane[4];
     GLfloat v0[3], v1[3], v2[3];
-
+    
     // To define a plane that matches the floor, we need to 3 vertices from it
-    v0[0] = g_floorQuad[0].x;
-    v0[1] = g_floorQuad[0].y;
-    v0[2] = g_floorQuad[0].z;
+    switch (planeQuad) {
+    case SHADOW_PLANE_FLOOR:
+        v0[0] = g_floorQuad[0].x;
+        v0[1] = g_floorQuad[0].y;
+        v0[2] = g_floorQuad[0].z;
 
-    v1[0] = g_floorQuad[1].x;
-    v1[1] = g_floorQuad[1].y;
-    v1[2] = g_floorQuad[1].z;
+        v1[0] = g_floorQuad[1].x;
+        v1[1] = g_floorQuad[1].y;
+        v1[2] = g_floorQuad[1].z;
 
-    v2[0] = g_floorQuad[2].x;
-    v2[1] = g_floorQuad[2].y;
-    v2[2] = g_floorQuad[2].z;
+        v2[0] = g_floorQuad[2].x;
+        v2[1] = g_floorQuad[2].y;
+        v2[2] = g_floorQuad[2].z;
+    	break;
+    case SHADOW_PLANE_TABLE:
+        v0[0] = g_tableQuad[0].x;
+        v0[1] = g_tableQuad[0].y;
+        v0[2] = g_tableQuad[0].z;
+
+        v1[0] = g_tableQuad[1].x;
+        v1[1] = g_tableQuad[1].y;
+        v1[2] = g_tableQuad[1].z;
+
+        v2[0] = g_tableQuad[2].x;
+        v2[1] = g_tableQuad[2].y;
+        v2[2] = g_tableQuad[2].z;
+    	break;
+    }
 
     findPlane( shadowPlane, v0, v1, v2 );
     
