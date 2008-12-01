@@ -1,5 +1,8 @@
 #include "light.h"
 
+// used in shadow plane
+#include "objects/Table.h"
+
 GLfloat no_mat[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 GLfloat mat_ambient[4] = {0.7f, 0.7f, 0.7f, 1.0f};
 GLfloat mat_ambient_color[4] = {0.8f, 0.8f, 0.2f, 1.0f};
@@ -11,7 +14,7 @@ GLfloat low_shininess = 5.0f;
 GLfloat high_shininess = 100.0f;
 
 GLfloat g_shadowMatrix[16];
-GLfloat g_lightPosition[] = { 2.0f, 6.0f, 0.0f, 1.0f }; // World position of light source
+GLfloat g_lightPosition[] = { 0.0f, 14.0f, 0.0f, 1.0f }; // World position of light source
 
 struct Vertex
 {
@@ -20,11 +23,11 @@ struct Vertex
 };
 
 Vertex g_floorQuad[] =
-{
-    { 0.0f, 1.0f,  0.0f,  -60.0f, -3.0f, -60.0f },
-    { 0.0f, 1.0f,  0.0f,  -60.0f, -3.0f,  60.0f },
-    { 0.0f, 1.0f,  0.0f,   60.0f, -3.0f,  60.0f },
-    { 0.0f, 1.0f,  0.0f,   60.0f, -3.0f, -60.0f },
+{		
+    { 0.0f, 1.0f,  0.0f, -X_DIMENSION, 3.48, Z_DIMENSION },
+    { 0.0f, 1.0f,  0.0f,  X_DIMENSION, 3.48, Z_DIMENSION },
+    { 0.0f, 1.0f,  0.0f,  X_DIMENSION, 3.48, -Z_DIMENSION },
+    { 0.0f, 1.0f,  0.0f, -X_DIMENSION, 3.48, -Z_DIMENSION },
 };
 
 /* ambient, diffuse and specular reflection; low shininess */

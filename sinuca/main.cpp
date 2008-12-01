@@ -19,9 +19,9 @@
 #include "interface/light.h"
 
 // video quality
-#define QUALITY_LOW '1'
-#define QUALITY_MEDIUM '2'
-#define QUALITY_HIGH '3'
+#define QUALITY_LOW 'a'
+#define QUALITY_MEDIUM 's'
+#define QUALITY_HIGH 'd'
 
 Game game;
 
@@ -30,7 +30,7 @@ static GLfloat	LightAmb[] = {1.0f, 1.0f, 0.9f, 1.0f};				// Ambient Light
 static GLfloat	LightDif[] = {1.0f, 1.0f, 0.9f, 1.0f};				// Diffuse Light
 static GLfloat	SpecRef[] = {1.0f, 1.0f, 1.0f, 1.0f};				// Material color
 
-static GLfloat g_lightPosition[] = { 2.0f, 6.0f, 0.0f, 1.0f }; // World position of light source
+static GLfloat LightPos[] = { 0.0f, 14.0f, 0.0f, 1.0f }; // World position of light source
 
 // Video quality
 int VIDEO_QUALITY = QUALITY_MEDIUM;                     
@@ -83,26 +83,26 @@ void keyboard(unsigned char key, int x, int y) {
 	}
 	
 	// VIDEO_QUALITY:        
-	if (key == 'a') {
-       glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-       glHint(GL_POINT_SMOOTH_HINT          , GL_FASTEST);
-       glHint(GL_LINE_SMOOTH_HINT           , GL_FASTEST);
-       glHint(GL_POLYGON_SMOOTH_HINT        , GL_FASTEST);
-    }
+	if (key == QUALITY_LOW) {
+       		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+       		glHint(GL_POINT_SMOOTH_HINT          , GL_FASTEST);
+       		glHint(GL_LINE_SMOOTH_HINT           , GL_FASTEST);
+       		glHint(GL_POLYGON_SMOOTH_HINT        , GL_FASTEST);
+    	}
     
-	if (key == 's') {
-       glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_DONT_CARE);
-       glHint(GL_POINT_SMOOTH_HINT          , GL_DONT_CARE);
-       glHint(GL_LINE_SMOOTH_HINT           , GL_DONT_CARE);
-       glHint(GL_POLYGON_SMOOTH_HINT        , GL_DONT_CARE);
-    }
+	if (key == QUALITY_MEDIUM) {
+       		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_DONT_CARE);
+       		glHint(GL_POINT_SMOOTH_HINT          , GL_DONT_CARE);
+       		glHint(GL_LINE_SMOOTH_HINT           , GL_DONT_CARE);
+       		glHint(GL_POLYGON_SMOOTH_HINT        , GL_DONT_CARE);
+    	}
     
-	if (key == 'd') {
-       glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-       glHint(GL_POINT_SMOOTH_HINT          , GL_NICEST);
-       glHint(GL_LINE_SMOOTH_HINT           , GL_NICEST);
-       glHint(GL_POLYGON_SMOOTH_HINT        , GL_NICEST);
-    }
+	if (key == QUALITY_HIGH) {
+       		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+       		glHint(GL_POINT_SMOOTH_HINT          , GL_NICEST);
+       		glHint(GL_LINE_SMOOTH_HINT           , GL_NICEST);
+       		glHint(GL_POLYGON_SMOOTH_HINT        , GL_NICEST);
+    	}
 	glutPostRedisplay();
 }
 
@@ -131,30 +131,29 @@ void init_gl(int argc, char **argv) {
 	glutSpecialFunc(specialkey);
 
 	// Iluminacao
-    glShadeModel(GL_SMOOTH);                            // Enable Smooth Shading
-    glClearDepth(1.0f);                                 // Depth Buffer Setup
-    glEnable(GL_DEPTH_TEST);                            // Enables Depth Testing
-    glDepthFunc(GL_LEQUAL);                             // The Type Of Depth Testing To Do
-    glEnable(GL_TEXTURE_2D);                            // Enable 2D Texture Mapping
+    	glShadeModel(GL_SMOOTH);                            // Enable Smooth Shading
+    	glClearDepth(1.0f);                                 // Depth Buffer Setup
+    	glEnable(GL_DEPTH_TEST);                            // Enables Depth Testing
+    	glDepthFunc(GL_LEQUAL);                             // The Type Of Depth Testing To Do
+    	glEnable(GL_TEXTURE_2D);                            // Enable 2D Texture Mapping
 
-    glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmb);         // Set The Ambient Lighting For Light0
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDif);         // Set The Diffuse Lighting For Light0
-    glLightfv(GL_LIGHT0, GL_POSITION, g_lightPosition);        // Set The Position For Light0
+        glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmb);         // Set The Ambient Lighting For Light0
+        glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDif);         // Set The Diffuse Lighting For Light0
+        glLightfv(GL_LIGHT0, GL_POSITION, LightPos);        // Set The Position For Light0
 
-    glEnable(GL_LIGHT0);                                // Enable Light 0
-    glEnable(GL_LIGHTING);                              // Enable Lighting
+    	glEnable(GL_LIGHT0);                                // Enable Light 0
+    	glEnable(GL_LIGHTING);                              // Enable Lighting
     
-    // Default Video quality = QUALITY_LOW
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-    glHint(GL_POINT_SMOOTH_HINT          , GL_FASTEST);
-    glHint(GL_LINE_SMOOTH_HINT           , GL_FASTEST);
-    glHint(GL_POLYGON_SMOOTH_HINT        , GL_FASTEST);
+    	// Default Video quality = QUALITY_LOW
+    	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);//GL_FASTEST);
+    	glHint(GL_POINT_SMOOTH_HINT          , GL_NICEST);//GL_FASTEST);
+    	glHint(GL_LINE_SMOOTH_HINT           , GL_NICEST);//GL_FASTEST);
+    	glHint(GL_POLYGON_SMOOTH_HINT        , GL_NICEST);//GL_FASTEST);
 
-    /*glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-    glEnable(GL_COLOR_MATERIAL);
-    setWoodenMaterial();*/
+        /*glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+        glEnable(GL_COLOR_MATERIAL);
+        setWoodenMaterial();*/
     
-
 }
 
 int main(int argc, char **argv) {

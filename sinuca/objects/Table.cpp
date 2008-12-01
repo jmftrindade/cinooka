@@ -1,5 +1,5 @@
 #include "Table.h"
-#include "interface/light.h"
+//#include "interface/light.h"
 
 // Constructor
 Table::Table() {
@@ -337,9 +337,10 @@ void Table::init() {
     drawLeg(1);
     glPopMatrix();
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);*/
+    glEnable(GL_LIGHTING);
+	*/
 	
-	// draw lag
+	// draw leg
     glPushMatrix();
 	glTranslatef(X_DIMENSION-9.2, -0.3, Z_DIMENSION-5.1);
     drawLeg(1);
@@ -347,13 +348,13 @@ void Table::init() {
 	
 	glPushMatrix();
 	glTranslatef(-X_DIMENSION+9.2, -0.3, -Z_DIMENSION+5.1);
-    drawLeg(1);
-    glPopMatrix();
+        drawLeg(1);
+        glPopMatrix();
 	
-    glPushMatrix();
+        glPushMatrix();
 	glTranslatef(X_DIMENSION-9.2, -0.3, -Z_DIMENSION+5.1);
-    drawLeg(1);
-    glPopMatrix();
+        drawLeg(1);
+        glPopMatrix();
     
    	glPushMatrix();
 	glTranslatef(-X_DIMENSION+9.2, -0.3, Z_DIMENSION-5.1);

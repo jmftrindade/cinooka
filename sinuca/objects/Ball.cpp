@@ -1,6 +1,7 @@
 //TODO carregar e aplicar a textura na bola
 
 #include "Ball.h"
+#include "interface/light.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -19,11 +20,30 @@ void Ball::draw() {
 	float rotation = SPEED_FACTOR * (speed.getX() * speed.getX() + speed.getZ()
 			* speed.getZ());
 	
-    ballId = gluNewQuadric();
-    gluQuadricNormals(ballId, GL_SMOOTH);                        // Generate Smooth Normals For The Quad
-    gluQuadricTexture(ballId, GL_TRUE);                          // Enable Texture Coords For The Quad    
-    glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);    // Set Up Sphere Mapping
-    glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);    // Set Up Sphere Mapping
+        ballId = gluNewQuadric();
+
+	// shadow matrix
+        GLfloat *shadowMatrix = getShadowMatrix();
+        
+        // draw shadow
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_LIGHTING);
+        glColor3f(0.2f, 0.2f, 0.2f); // Shadow's color
+        glPushMatrix();
+        glMultMatrixf((GLfloat *)shadowMatrix);
+        glTranslatef(center.getX(), 3.5 + BALL_RADIUS, center.getZ());
+        glRotatef(rotation, ROTATION_FACTOR*(-speed.getZ()), 0, ROTATION_FACTOR
+        * speed.getX());
+	gluSphere(ballId, BALL_RADIUS, 32, 16);
+	glPopMatrix();
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_LIGHTING);
+
+	// textures...
+        gluQuadricNormals(ballId, GL_SMOOTH);                        // Generate Smooth Normals For The Quad
+        gluQuadricTexture(ballId, GL_TRUE);                          // Enable Texture Coords For The Quad    
+        glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);    // Set Up Sphere Mapping
+        glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);    // Set Up Sphere Mapping
 
 	glPushMatrix();
 	glTranslatef(center.getX(), 3.5 + BALL_RADIUS, center.getZ());
@@ -32,7 +52,7 @@ void Ball::draw() {
 	
 	// ball texture
 	glColor3f(1.0f, 1.0f, 1.0f);
-    glBindTexture(GL_TEXTURE_2D, ballTextureId);
+        glBindTexture(GL_TEXTURE_2D, ballTextureId);
 	gluSphere(ballId, BALL_RADIUS, 32, 16);
 	
 	glBindTexture(GL_TEXTURE_2D, ballSphereMapTexId);
