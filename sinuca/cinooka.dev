@@ -1,7 +1,7 @@
 [Project]
 FileName=cinooka.dev
 Name=Cinooka
-UnitCount=64
+UnitCount=65
 Type=1
 Ver=1
 ObjFiles=
@@ -461,7 +461,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit44]
-FileName=interface\material_light.cpp
+FileName=interface\light.cpp
 CompileCpp=1
 Folder=interface
 Compile=1
@@ -471,7 +471,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit45]
-FileName=interface\material_light.h
+FileName=interface\light.h
 CompileCpp=1
 Folder=interface
 Compile=1
@@ -664,6 +664,26 @@ BuildCmd=
 FileName=main.cpp
 CompileCpp=1
 Folder=Cinooka
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit65]
+FileName=interface\geometry.h
+CompileCpp=1
+Folder=interface
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit67]
+FileName=interface\resource.h
+CompileCpp=1
+Folder=interface
 Compile=1
 Link=1
 Priority=1000

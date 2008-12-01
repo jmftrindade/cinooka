@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = camera/Camera.o interface/image.o interface/interface.o interface/material_light.o interface/texture.o objects/Ball.o objects/Cue.o objects/Game.o objects/Point3d.o objects/Point.o objects/Shot.o objects/Table.o physics/physics.o main.o $(RES)
-LINKOBJ  = camera/Camera.o interface/image.o interface/interface.o interface/material_light.o interface/texture.o objects/Ball.o objects/Cue.o objects/Game.o objects/Point3d.o objects/Point.o objects/Shot.o objects/Table.o physics/physics.o main.o $(RES)
+OBJ  = camera/Camera.o interface/image.o interface/interface.o interface/light.o interface/texture.o objects/Ball.o objects/Cue.o objects/Game.o objects/Point3d.o objects/Point.o objects/Shot.o objects/Table.o physics/physics.o main.o $(RES)
+LINKOBJ  = camera/Camera.o interface/image.o interface/interface.o interface/light.o interface/texture.o objects/Ball.o objects/Cue.o objects/Game.o objects/Point3d.o objects/Point.o objects/Shot.o objects/Table.o physics/physics.o main.o $(RES)
 LIBS =  -L"C:/Arquivos de programas/Dev-Cpp/lib" -lglut32 -lglu32 -lopengl32 -lwinmm -lgdi32   
 INCS =  -I"C:/Arquivos de programas/Dev-Cpp/include" 
 CXXINCS =  -I"C:/Arquivos de programas/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Arquivos de programas/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Arquivos de programas/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Arquivos de programas/Dev-Cpp/include/c++/3.4.2"  -I"C:/Arquivos de programas/Dev-Cpp/include" 
@@ -35,8 +35,8 @@ interface/image.o: interface/image.cpp
 interface/interface.o: interface/interface.cpp
 	$(CPP) -c interface/interface.cpp -o interface/interface.o $(CXXFLAGS)
 
-interface/material_light.o: interface/material_light.cpp
-	$(CPP) -c interface/material_light.cpp -o interface/material_light.o $(CXXFLAGS)
+interface/light.o: interface/light.cpp
+	$(CPP) -c interface/light.cpp -o interface/light.o $(CXXFLAGS)
 
 interface/texture.o: interface/texture.cpp
 	$(CPP) -c interface/texture.cpp -o interface/texture.o $(CXXFLAGS)

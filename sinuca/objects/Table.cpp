@@ -1,4 +1,5 @@
 #include "Table.h"
+#include "interface/light.h"
 
 // Constructor
 Table::Table() {
@@ -10,34 +11,6 @@ Table::Table() {
 	holes[5].setVector(-X_DIMENSION, -Z_DIMENSION);
 }
 
-GLfloat tab_col_spec[4] = {0.0, 0.0, 0.0, 0.0};
-GLfloat tab_col_diff[4] = {0.05, 0.4, 0.13, 1.0};
-GLfloat tab_col_amb [4];
-GLfloat wood_col_spec[4] = {0.7, 0.7, 0.7, 1.0};
-GLfloat wood_col_spec_null[4] = {0.0, 0.0, 0.0, 1.0};
-GLfloat wood_col_diff[4] = {0.25, 0.08, 0.02, 1.0};
-GLfloat wood_col_diff2[4] = {0.7, 0.7, 0.7, 1.0};
-GLfloat wood_col_diff3[4] = {0.07, 0.07, 0.07, 1.0};
-GLfloat wood_col_amb  [4];
-GLfloat wood_col_amb2 [4];
-GLfloat wood_col_amb3 [4];
-GLfloat wood_col_shin = 100.0;
-//    GLfloat dia_col_spec[4] = {1.0, 0.9, 0.4, 1.0};
-GLfloat dia_col_spec[4] = {0.5, 0.5, 0.5, 1.0};
-GLfloat dia_col_diff[4] = {0.8, 0.7, 0.1, 1.0};
-GLfloat dia_col_amb [4];
-GLfloat dia_col_shin = 100.0;
-GLfloat bumpers_col_spec[4] = {1.0, 1.0, 1.0, 1.0};
-GLfloat bumpers_col_diff[4] = {0.3, 0.3, 0.3, 1.0};
-GLfloat bumpers_col_amb [4];
-GLfloat bumpers_col_shin = 100.0;
-GLfloat hole_col_spec[4] = {0.6, 0.6, 0.6, 0.6};
-GLfloat hole_col_diff[4] = {0.2, 0.2, 0.2, 1.0};
-GLfloat hole_col_amb [4];
-GLfloat hole_col_shin = 1000.0;
-GLfloat t_gen_params[] = {8.0,0.0,0.0,0.0};
-GLfloat s_gen_params[] = {0.0,1.0,0.0,0.0};	
-
 void Table::init() {
 	//table
 	GLUquadricObj *quadric;
@@ -46,6 +19,8 @@ void Table::init() {
 	tableTextureId = LoadBitmap((char*) "images/table_frame.bmp");
 	upTableTextureId = LoadBitmap((char*) "images/green.bmp");
 	legTableTextureId = LoadBitmap((char*) "images/table_frame.bmp");
+
+    GLuint marbleTextureId = LoadBitmap((char*) "images/white_marble.bmp");
 
 	glBindTexture(GL_TEXTURE_2D, tableTextureId);
 
@@ -68,6 +43,34 @@ void Table::init() {
 	glVertex3f(X_DIMENSION + TABLE_SPACE, 2.5, Z_DIMENSION + TABLE_SPACE);
 	glEnd();
 
+    // parte inferior
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 0.0f, 1.0f); // normal Z
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE), 1.0, Z_DIMENSION + TABLE_SPACE);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE), 2.3, Z_DIMENSION + TABLE_SPACE);
+	glTexCoord2f(2.0, 1.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE, 2.3, Z_DIMENSION + TABLE_SPACE);
+	glTexCoord2f(2.0, 0.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE, 1.0, Z_DIMENSION + TABLE_SPACE);
+	glEnd();
+
+    // parte interna
+    glBindTexture(GL_TEXTURE_2D, marbleTextureId);
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 0.0f, 1.0f); // normal Z
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE)+0.5, 2.0, Z_DIMENSION + TABLE_SPACE-0.5);
+	glTexCoord2f(0.0, 6.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE)+0.5, 3.0, Z_DIMENSION + TABLE_SPACE-0.5);
+	glTexCoord2f(6.0, 6.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE-0.5, 3.0, Z_DIMENSION + TABLE_SPACE-0.5);
+	glTexCoord2f(6.0, 0.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE-0.5, 2.0, Z_DIMENSION + TABLE_SPACE-0.5);
+	glEnd();
+
+    glBindTexture(GL_TEXTURE_2D, tableTextureId);
 	glBegin(GL_QUADS);
 	glNormal3f(0.0f, 0.0f, -1.0f); // normal -Z
 	glTexCoord2f(0.0, 0.0);
@@ -79,7 +82,35 @@ void Table::init() {
 	glTexCoord2f(2.0, 0.0);
 	glVertex3f(X_DIMENSION + TABLE_SPACE, 2.5, -(Z_DIMENSION + TABLE_SPACE));
 	glEnd();
+	
+	// parte inferior
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 0.0f, -1.0f); // normal -Z
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE), 1.0, -(Z_DIMENSION + TABLE_SPACE));
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE), 2.3, -(Z_DIMENSION + TABLE_SPACE));
+	glTexCoord2f(2.0, 1.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE, 2.3, -(Z_DIMENSION + TABLE_SPACE));
+	glTexCoord2f(2.0, 0.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE, 1.0, -(Z_DIMENSION + TABLE_SPACE));
+	glEnd();
+	
+	// parte interna
+	glBindTexture(GL_TEXTURE_2D, marbleTextureId);
+	glBegin(GL_QUADS);
+	glNormal3f(0.0f, 0.0f, -1.0f); // normal -Z
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE)+0.5, 2.0, -(Z_DIMENSION + TABLE_SPACE)+0.5);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE)+0.5, 3.0, -(Z_DIMENSION + TABLE_SPACE)+0.5);
+	glTexCoord2f(2.0, 1.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE-0.5, 3.0, -(Z_DIMENSION + TABLE_SPACE)+0.5);
+	glTexCoord2f(2.0, 0.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE-0.5, 2.0, -(Z_DIMENSION + TABLE_SPACE)+0.5);
+	glEnd();
 
+	glBindTexture(GL_TEXTURE_2D, tableTextureId);
 	glBegin(GL_QUADS);
 	glNormal3f(-1.0f, 0.0f, 0.0f); // normal -X
 	glTexCoord2f(0.0, 0.0);
@@ -91,7 +122,35 @@ void Table::init() {
 	glTexCoord2f(1.0, 0.0);
 	glVertex3f(-(X_DIMENSION + TABLE_SPACE), 2.5, -(Z_DIMENSION + TABLE_SPACE));
 	glEnd();
+	
+	// parte inferior
+	glBegin(GL_QUADS);
+	glNormal3f(-1.0f, 0.0f, 0.0f); // normal -X
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE), 1.0, Z_DIMENSION + TABLE_SPACE);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE), 2.3, Z_DIMENSION + TABLE_SPACE);
+	glTexCoord2f(1.0, 1.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE), 2.3, -(Z_DIMENSION + TABLE_SPACE));
+	glTexCoord2f(1.0, 0.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE), 1.0, -(Z_DIMENSION + TABLE_SPACE));
+	glEnd();
+	
+	// parte interna
+	glBindTexture(GL_TEXTURE_2D, marbleTextureId);
+	glBegin(GL_QUADS);
+	glNormal3f(-1.0f, 0.0f, 0.0f); // normal -X
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE)+0.5, 2.0, Z_DIMENSION + TABLE_SPACE-0.5);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE)+0.5, 3.0, Z_DIMENSION + TABLE_SPACE-0.5);
+	glTexCoord2f(1.0, 1.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE)+0.5, 3.0, -(Z_DIMENSION + TABLE_SPACE)+0.5);
+	glTexCoord2f(1.0, 0.0);
+	glVertex3f(-(X_DIMENSION + TABLE_SPACE)+0.5, 2.0, -(Z_DIMENSION + TABLE_SPACE)+0.5);
+	glEnd();
 
+    glBindTexture(GL_TEXTURE_2D, tableTextureId);
 	glBegin(GL_QUADS);
 	glNormal3f(1.0f, 0.0f, 0.0f); // normal X
 	glTexCoord2f(0.0, 0.0);
@@ -103,8 +162,37 @@ void Table::init() {
 	glTexCoord2f(1.0, 0.0);
 	glVertex3f(X_DIMENSION + TABLE_SPACE, 2.5, -(Z_DIMENSION + TABLE_SPACE));
 	glEnd();
+ 
+    // parte inferior
+	glBegin(GL_QUADS);
+	glNormal3f(1.0f, 0.0f, 0.0f); // normal X
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE, 1.0, Z_DIMENSION + TABLE_SPACE);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE, 2.3, Z_DIMENSION + TABLE_SPACE);
+	glTexCoord2f(1.0, 1.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE, 2.3, -(Z_DIMENSION + TABLE_SPACE));
+	glTexCoord2f(1.0, 0.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE, 1.0, -(Z_DIMENSION + TABLE_SPACE));
+	glEnd();
+
+    // parte interna
+    glBindTexture(GL_TEXTURE_2D, marbleTextureId);
+	glBegin(GL_QUADS);
+	glNormal3f(1.0f, 0.0f, 0.0f); // normal X
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE-0.5, 2.0, Z_DIMENSION + TABLE_SPACE-0.5);
+	glTexCoord2f(0.0, 1.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE-0.5, 3.0, Z_DIMENSION + TABLE_SPACE-0.5);
+	glTexCoord2f(1.0, 1.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE-0.5, 3.0, -(Z_DIMENSION + TABLE_SPACE)+0.5);
+	glTexCoord2f(1.0, 0.0);
+	glVertex3f(X_DIMENSION + TABLE_SPACE-0.5, 2.0, -(Z_DIMENSION + TABLE_SPACE)+0.5);
+	glEnd();
+
 
 	//lado dentro
+	glBindTexture(GL_TEXTURE_2D, tableTextureId);
 	glBegin(GL_QUADS);
 	glNormal3f(0.0f, 0.0f, -1.0f); // normal -Z
 	glTexCoord2f(0.0, 0.0);
@@ -154,6 +242,7 @@ void Table::init() {
 	glEnd();
 
 	//lado cima
+	glBindTexture(GL_TEXTURE_2D, marbleTextureId);
 	glBegin(GL_QUADS);
 	glNormal3f(0.0, 1.0, 0.0); // normal apontando pra cima
 	glTexCoord2f(0.0, 0.0);
@@ -216,56 +305,61 @@ void Table::init() {
 	glVertex3f(-X_DIMENSION, 3.48, -Z_DIMENSION);
 	glEnd();
 	
-	// draw a big centered leg :-)
+	glBindTexture(GL_TEXTURE_2D, tableTextureId);
+	glBegin(GL_QUADS);
+	glNormal3f(0.0, 1.0, 0.0); // normal apontando pra cima
+	glTexCoord2f(0.0, 0.0);
+	glVertex3f(-(X_DIMENSION+TABLE_SPACE), 2.3, Z_DIMENSION+TABLE_SPACE);
+	glTexCoord2f(0.0, 4.0);
+	glVertex3f(X_DIMENSION+TABLE_SPACE, 2.3, Z_DIMENSION+TABLE_SPACE);
+	glTexCoord2f(4.0, 4.0);
+	glVertex3f(X_DIMENSION+TABLE_SPACE, 2.3, -(Z_DIMENSION+TABLE_SPACE));
+	glTexCoord2f(4.0, 0.0);
+	glVertex3f(-(X_DIMENSION+TABLE_SPACE), 2.3, -(Z_DIMENSION+TABLE_SPACE));
+	glEnd();
+	
+	
+	// draw 4 legs
 	glBindTexture(GL_TEXTURE_2D, legTableTextureId);
-	glBegin(GL_QUADS);
-	glNormal3f(0.0f, -0.3f, 1.0f); // normal -Z
-	glTexCoord2f(0.0, 0.0);
-	glVertex3f(-X_DIMENSION+2.0, -4.21, Z_DIMENSION);
-	glTexCoord2f(0.0, 1.0);
-	glVertex3f(-X_DIMENSION-1.0, 2.5, Z_DIMENSION+1.0);
-	glTexCoord2f(1.0, 1.0);
-	glVertex3f(X_DIMENSION+1.0	, 2.5, Z_DIMENSION+1.0);
-	glTexCoord2f(1.0, 0.0);
-	glVertex3f(X_DIMENSION-2.0, -4.21, Z_DIMENSION);
-	glEnd();
+	glPushMatrix();
+	glScalef(2.5, 6.0, 2.5);
 	
-	glBegin(GL_QUADS);
-	glNormal3f(1.0f, -0.3f, 0.0f); // normal X
-	glTexCoord2f(0.0, 0.0);
-	glVertex3f(X_DIMENSION-2.0, -4.21, Z_DIMENSION);
-	glTexCoord2f(0.0, 1.0);
-	glVertex3f(X_DIMENSION+1.0, 2.5, Z_DIMENSION+1.0);
-	glTexCoord2f(1.0, 1.0);
-	glVertex3f(X_DIMENSION+1.0, 2.5, -Z_DIMENSION-1.0);
-	glTexCoord2f(1.0, 0.0);
-	glVertex3f(X_DIMENSION-2.0, -4.21, -Z_DIMENSION);
-	glEnd();
+	// used to calculate shadow
+	/*GLfloat *shadowMatrix = getShadowMatrix();
 	
-	glBegin(GL_QUADS);
-	glNormal3f(0.0f, -0.3f, -1.0f); // normal -Z
-	glTexCoord2f(0.0, 0.0);
-	glVertex3f(-X_DIMENSION+2.0, -4.21, -Z_DIMENSION);
-	glTexCoord2f(0.0, 1.0);
-	glVertex3f(-X_DIMENSION-1.0, 2.5, -Z_DIMENSION-1.0);
-	glTexCoord2f(1.0, 1.0);
-	glVertex3f(X_DIMENSION+1.0	, 2.5, -Z_DIMENSION-1.0);
-	glTexCoord2f(1.0, 0.0);
-	glVertex3f(X_DIMENSION-2.0, -4.21, -Z_DIMENSION);
-	glEnd();
+	// draw shadow
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glColor3f(0.2f, 0.2f, 0.2f); // Shadow's color
+    glPushMatrix();
+    glMultMatrixf((GLfloat *)shadowMatrix);
+	glTranslatef(X_DIMENSION-9.2, -0.3, Z_DIMENSION-5.1);
+    drawLeg(1);
+    glPopMatrix();
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_LIGHTING);*/
 	
-	glBegin(GL_QUADS);
-	glNormal3f(-1.0f, -0.3f, 0.0f); // normal -X
-	glTexCoord2f(0.0, 0.0);
-	glVertex3f(-X_DIMENSION+2.0, -4.21, Z_DIMENSION);
-	glTexCoord2f(0.0, 1.0);
-	glVertex3f(-X_DIMENSION-1.0, 2.5, Z_DIMENSION+1.0);
-	glTexCoord2f(1.0, 1.0);
-	glVertex3f(-X_DIMENSION-1.0, 2.5, -Z_DIMENSION-1.0);
-	glTexCoord2f(1.0, 0.0);
-	glVertex3f(-X_DIMENSION+2.0, -4.21, -Z_DIMENSION);
-	glEnd();
-
+	// draw lag
+    glPushMatrix();
+	glTranslatef(X_DIMENSION-9.2, -0.3, Z_DIMENSION-5.1);
+    drawLeg(1);
+    glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(-X_DIMENSION+9.2, -0.3, -Z_DIMENSION+5.1);
+    drawLeg(1);
+    glPopMatrix();
+	
+    glPushMatrix();
+	glTranslatef(X_DIMENSION-9.2, -0.3, -Z_DIMENSION+5.1);
+    drawLeg(1);
+    glPopMatrix();
+    
+   	glPushMatrix();
+	glTranslatef(-X_DIMENSION+9.2, -0.3, Z_DIMENSION-5.1);
+    drawLeg(1);
+    glPopMatrix();
+	
     glPopMatrix();
 	
 
@@ -340,3 +434,49 @@ int Table::nearestHole(Point p) {
 	}
 	return 3;
 }
+
+void Table::drawLeg(GLfloat size) {
+  static GLfloat n[6][3] =
+  {
+    {-1.0, 0.0, 0.0},
+    {0.0, 1.0, 0.0},
+    {1.0, 0.0, 0.0},
+    {0.0, -1.0, 0.0},
+    {0.0, 0.0, 1.0},
+    {0.0, 0.0, -1.0}
+  };
+  static GLint faces[6][4] =
+  {
+    {0, 1, 2, 3},
+    {3, 2, 6, 7},
+    {7, 6, 5, 4},
+    {4, 5, 1, 0},
+    {5, 6, 2, 1},
+    {7, 4, 0, 3}
+  };
+  GLfloat v[8][3];
+  GLint i;
+
+  v[0][0] = v[1][0] = v[2][0] = v[3][0] = -size / 2;
+  v[4][0] = v[5][0] = v[6][0] = v[7][0] = size / 2;
+  v[0][1] = v[1][1] = v[4][1] = v[5][1] = -size / 2;
+  v[2][1] = v[3][1] = v[6][1] = v[7][1] = size / 2;
+  v[0][2] = v[3][2] = v[4][2] = v[7][2] = -size / 2;
+  v[1][2] = v[2][2] = v[5][2] = v[6][2] = size / 2;
+
+  for (i = 5; i >= 0; i--) {
+    glBegin(GL_QUADS);
+    glNormal3fv(&n[i][0]);
+    glTexCoord2f(0.0, 0.0);
+    glVertex3fv(&v[faces[i][0]][0]);
+    glTexCoord2f(0.0, 1.0);
+    glVertex3fv(&v[faces[i][1]][0]);
+    glTexCoord2f(1.0, 1.0);
+    glVertex3fv(&v[faces[i][2]][0]);
+    glTexCoord2f(1.0, 0.0);
+    glVertex3fv(&v[faces[i][3]][0]);
+    glEnd();
+  }
+}
+
+

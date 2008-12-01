@@ -33,14 +33,17 @@ void Interface::initFloorAndWalls() {
     float size = 60.0;
     floorAndWallsId = glGenLists(1);
     glNewList(floorAndWallsId, GL_COMPILE_AND_EXECUTE);
-    glBindTexture(GL_TEXTURE_2D, floorTextureId);
+    //glBindTexture(GL_TEXTURE_2D, floorTextureId);
+    glDisable(GL_TEXTURE_2D);
 
     glPushMatrix();
-    glTranslatef(0.0, -4.21, 0.0);
-
+    glTranslatef(0.0, -5.0, 0.0);
+    
+    glColor3f(1.0f, 0.0f, 0.0f);
+    
     // chao
     glBegin(GL_QUADS);
-    glNormal3f( 0.0f, 1.0f, 0.0f); // normal apontando pra cima
+    glNormal3f(0.0f, 1.0f, 0.0f); // normal apontando pra cima
     glTexCoord2f(0.0, 0.0);
     glVertex3f(-size, 0, size);
     glTexCoord2f(0.0, 10.0);
@@ -54,7 +57,7 @@ void Interface::initFloorAndWalls() {
 
     // parede de tras
     glPushMatrix();
-    glTranslatef(0.0, -4.21, 0.0);
+    glTranslatef(0.0, -5.0, 0.0);
 
     glBegin(GL_QUADS);
     glNormal3f( 1.0f, 0.0f, 0.0f); // normal X
@@ -71,9 +74,8 @@ void Interface::initFloorAndWalls() {
     
     
     // parede da direita
-    glBindTexture(GL_TEXTURE_2D, floorTextureId);
     glPushMatrix();
-    glTranslatef(0.0, -4.21, 0.0);
+    glTranslatef(0.0, -5.0, 0.0);
 
     glBegin(GL_QUADS);
     glNormal3f( 0.0f, 0.0f, -1.0f); // normal -Z
@@ -90,7 +92,7 @@ void Interface::initFloorAndWalls() {
     
     // parede da frente
     glPushMatrix();
-    glTranslatef(0.0, -4.21, 0.0);
+    glTranslatef(0.0, -5.0, 0.0);
 
     glBegin(GL_QUADS);
     glNormal3f(-1.0f, 0.0f, 0.0f); // normal -X
@@ -107,7 +109,7 @@ void Interface::initFloorAndWalls() {
     
     // parede da esquerda
     glPushMatrix();
-    glTranslatef(0.0, -4.21, 0.0);
+    glTranslatef(0.0, -5.0, 0.0);
 
     glBegin(GL_QUADS);
     glNormal3f( 0.0f, 0.0f, 1.0f); // normal Z
@@ -122,13 +124,14 @@ void Interface::initFloorAndWalls() {
     glEnd();
     glPopMatrix();
     
+    glEnable(GL_TEXTURE_2D);
+    
     glEndList();	
 }
 
 void Interface::drawEnvironment() {
 	// TODO desenhar chao
     table->draw();
-    glBindTexture(GL_TEXTURE_2D, floorTextureId);
     glCallList(floorAndWallsId);
 }
 

@@ -39,7 +39,7 @@
 #endif
 #include "interface/image.h"
 #include "interface/texture.h"
-#include "interface/material_light.h"
+#include "interface/light.h"
 #include "Point.h"
 
 class Table {
@@ -64,6 +64,7 @@ public:
 	// Other
 	bool holeArea(Point p);
 	int nearestHole(Point p);
+	void drawLeg(GLfloat size);
 };
 
 #endif
