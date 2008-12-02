@@ -12,6 +12,9 @@ Table::Table() {
 }
 
 void Table::init() {
+	// used to calculate shadow
+	GLfloat *shadowMatrix = getShadowMatrix(SHADOW_PLANE_FLOOR);
+	
 	//table
 	GLUquadricObj *quadric;
 
@@ -324,11 +327,8 @@ void Table::init() {
 	glPushMatrix();
 	glScalef(2.5, 6.0, 2.5);
 
-	// used to calculate shadow
-	/*GLfloat *shadowMatrix = getShadowMatrix(SHADOW_PLANE_FLOOR);
-
 	// draw shadow
-	glDisable(GL_DEPTH_TEST);
+	/*glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
 	glColor3f(0.2f, 0.2f, 0.2f); // Shadow's color
 	glPushMatrix();

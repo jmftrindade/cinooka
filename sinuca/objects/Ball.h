@@ -1,7 +1,7 @@
 #ifndef _BALL
 #define _BALL
 
-#define BALL_RADIUS 0.25
+#define BALL_RADIUS 0.30
 #define SPEED_FACTOR 150000
 #define ROTATION_FACTOR 1000
 

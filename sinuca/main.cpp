@@ -52,14 +52,22 @@ void reshape(int w, int h) {
 	glLoadIdentity();
 	glViewport(0, 0, w, h);
 	gluPerspective(45, 1.0f * w / h, 1, 200);
-
-	Point3d eye = game.camera.eye;
-	Point3d at = game.camera.at;
-	Point3d up = game.camera.up;
-	glMatrixMode(GL_MODELVIEW);
+    Point3d eye;
+    Point3d at;
+    Point3d up;
+    if (game.cam_mode == TABLE){
+        eye = game.camera.eye;
+        at = game.camera.at;
+        up = game.camera.up;
+    } else {
+        eye = game.ball_camera.eye;
+        at = game.ball_camera.at;
+        up = game.ball_camera.up;
+    }
+    glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(eye.x,eye.y,eye.z,at.x,at.y,at.z,up.x,up.y,up.z);
-	//gluLookAt(20, 0, 43, 0, 0, 0, 0.0f, 1.0f, 0.0f);
+    gluLookAt(eye.x,eye.y,eye.z,at.x,at.y,at.z,up.x,up.y,up.z);
+    //gluLookAt(20, 0, 43, 0, 0, 0, 0.0f, 1.0f, 0.0f);
 }
 
 void specialkey(int key, int x, int y) {
@@ -75,11 +83,23 @@ void keyboard(unsigned char key, int x, int y) {
 		game.processKey(32);
 
 	if (key == 'o') {
-		game.camera.zoom(-2.0);
+		if (game.cam_mode == TABLE) {
+			game.camera.zoom(-2.0);			
+		} else {
+			game.ball_camera.zoom(-2.0);
+		}
 	}
 
 	if (key == 'l') {
-		game.camera.zoom(2.0);
+		if (game.cam_mode == TABLE) {
+			game.camera.zoom(2.0);			
+		} else {
+			game.ball_camera.zoom(2.0);
+		}
+	}
+	
+	if (key == 'j') {
+		game.processKey('j');
 	}
 
 	// VIDEO_QUALITY:        
@@ -159,6 +179,7 @@ void init_gl(int argc, char **argv) {
 int main(int argc, char **argv) {
 
 	init_gl(argc, argv);
+	reshape(800,600); //atualiza camera
 	game.initGL();
 
 	glutMainLoop();

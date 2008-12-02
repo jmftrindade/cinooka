@@ -12,13 +12,7 @@
 #include "objects/Table.h"
 #include "objects/Ball.h"
 #include "camera/Camera.h"
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#include <OpenGL/gl.h>
-#else
-#include <GL/glut.h>
-#include <GL/gl.h>
-#endif
+//#include "sounds/sound.h"
 
 #define SPACE_KEY 32
 
@@ -29,10 +23,13 @@ enum MODE {
 	DIRECTION, SHOT, PHYSICS, FIM
 };
 
+enum CAM_MODE {TABLE, BALL};
+
 struct Player {
     int p_id;
     bool final;
     int total_balls;
+    int previous_total_balls;
 
     Player();
     Player(int id, int total);
@@ -74,6 +71,8 @@ private:
 	bool turnEnded();
 	void processEnd();
 	bool illegalMove(int pl);
+	void killPlayerBall(int pl);
+	void updateBallCount();
 	void processEndGame(int pl);
 	bool isOver();
 	bool checkCueBall();
@@ -84,8 +83,14 @@ private:
 public:
 
     Camera camera;
+    Camera ball_camera;
+    CAM_MODE cam_mode;
+    //Sound music;
+    //Sound hit;
 	Game();
 	void initGL();
+	//void initSound();
+	//void playHit(Ball* ball);
 	void processKey(int key);
 	void processMouse(int x, int y, int button, int state);
 	void processMotion(int x, int y);

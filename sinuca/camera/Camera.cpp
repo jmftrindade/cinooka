@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 Camera::Camera(){
-    at = Point3d(0.0,0.0,0.0);
+    at = Point3d(0.0,5.0,0.0);
 	up = Point3d(0.0,1.0,0.0);
 	theta = M_PI/3;
 	phi = M_PI/3;
@@ -16,8 +16,8 @@ Camera::~Camera(){};
 
 void Camera::update(float x, float y){
     float new_phi = phi_old - (y-y_old)/50.0;	// atualiza phi de acordo com o movimento do mouse no eixo y
-    if (new_phi > (M_PI/2.2))								// normaliza phi no intervalo (0,PI)
-        new_phi = M_PI/2.2 + 0.001;
+    if (new_phi > (M_PI/2.3))								// normaliza phi no intervalo (0,PI)
+        new_phi = M_PI/2.3 + 0.001;
     else if (new_phi < 0)
         new_phi = 0.001;
 
@@ -37,23 +37,23 @@ void Camera::save(float x, float y){
 
 Point3d Camera::transf_coord(){
     Point3d result;
-    result.z = (GLdouble)R*sin(phi)*cos(theta);
-    result.x = (GLdouble)R*sin(phi)*sin(theta);
-    result.y = (GLdouble)R*cos(phi);
+    result.z = at.z + (GLdouble)R*sin(phi)*cos(theta);
+    result.x = at.x + (GLdouble)R*sin(phi)*sin(theta);
+    result.y = at.y + (GLdouble)R*cos(phi);
     return result;
 }
 
 void Camera::zoom(float x){
     R += x;
-    if (R < 23.0)
-        R = 23.0;
+    if (R < 3.0)
+        R = 3.0;
     if (R > 47.0)
         R = 47.0;
     eye = transf_coord();
     glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
     gluLookAt(eye.x,eye.y,eye.z,at.x,at.y,at.z,up.x,up.y,up.z);
-    //printf("R: %f\n", R);
+    //printf("at: %f, %f, %f\n", at.x, at.y, at.z);
 }
 
 void Camera::pan(float x, float z){
@@ -62,7 +62,7 @@ void Camera::pan(float x, float z){
 //    glMatrixMode(GL_MODELVIEW);
 //	glLoadIdentity();
 //    gluLookAt(eye.x,eye.y,eye.z,at.x,at.y,at.z,up.x,up.y,up.z);
-    printf("PAN NAO IMPLEMENTADO");
+    //printf("PAN NAO IMPLEMENTADO");
 }
 
 void Camera::rotate(float x, float y){
