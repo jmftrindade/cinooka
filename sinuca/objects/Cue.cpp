@@ -30,7 +30,7 @@ void Cue::draw() {
 
 	glPushMatrix();
 	glDisable(GL_TEXTURE_2D);
-	//glColor3f(1.0, 1.0, 1.0);
+	glColor3f(1.0, 1.0, 1.0);
 	glTranslatef(position.getX(), 3.7, position.getZ());
 	glRotatef(angle-180, 0, 1, 0);
 	glTranslatef(0.0, 0.0, -5.5);

@@ -47,7 +47,7 @@ void Game::initGL() {
 
 void Game::initializeGame() {
 	currentPlayer = 1;
-	printf("Player %d turn\n",currentPlayer);
+	printf("Player %d turn.\n",currentPlayer);
 	cueBall_collided = false;
 	mode = DIRECTION;
 	cam_mode = TABLE;

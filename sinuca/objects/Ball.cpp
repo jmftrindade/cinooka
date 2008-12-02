@@ -11,7 +11,7 @@ void Ball::init() {
 	std::ostringstream ballTexturePath;
 	ballTexturePath << "images/" << number << ".bmp";
 	ballTextureId = LoadBitmap((char*) ballTexturePath.str().c_str());
-	ballSphereMapTexId = LoadBitmap((char*) "images/sphere_map.bmp");
+	ballSphereMapTexId = LoadBitmap((char*) "images/sphere_map2.bmp");
 	//ballLightFlareTexId = LoadBitmap((char*) "images/lightflare.bmp");
 }
 
@@ -27,7 +27,7 @@ void Ball::draw() {
 
 	// draw shadow
 	glDisable(GL_LIGHTING);
-	glColor3f(0.2f, 0.2f, 0.2f); // Shadow's color
+	glColor3f(0.0f, 0.0f, 0.0f); // Shadow's color
 	glPushMatrix();
 	glMultMatrixf((GLfloat *)shadowMatrix);
 	glTranslatef(center.getX(), 3.5 + BALL_RADIUS, center.getZ());

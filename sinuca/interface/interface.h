@@ -26,6 +26,7 @@ private:
 	BallArray* ba;
 
 	GLuint floorTextureId;
+	GLuint wallTextureId;
 	GLuint cueTextureId;
 	GLuint floorId;
 	GLuint floorAndWallsId;

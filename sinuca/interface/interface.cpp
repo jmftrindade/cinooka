@@ -23,7 +23,8 @@ void Interface::init() {
 		b->draw();
 	}
 	//floorTextureId = loadTexture((char*) "images/floor.sgi");
-	floorTextureId = LoadBitmap((char*) "images/red_carpet.bmp");
+	floorTextureId = LoadBitmap((char*) "images/tile.bmp");//red_carpet.bmp");
+	wallTextureId = LoadBitmap((char*) "images/wall06.bmp");
 	cueTextureId = LoadBitmap((char*) "images/wall_cue.bmp");
 	initFloorAndWalls();
 }
@@ -33,8 +34,7 @@ void Interface::initFloorAndWalls() {
     float size = 60.0;
     floorAndWallsId = glGenLists(1);
     glNewList(floorAndWallsId, GL_COMPILE_AND_EXECUTE);
-    //glBindTexture(GL_TEXTURE_2D, floorTextureId);
-    glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, floorTextureId);
 
     glPushMatrix();
     glTranslatef(0.0, -5.0, 0.0);
@@ -56,20 +56,22 @@ void Interface::initFloorAndWalls() {
     glEnd();
     glPopMatrix();
 
+    // walls texture
+    glBindTexture(GL_TEXTURE_2D, wallTextureId);
+    
     // parede de tras
     glPushMatrix();
     glTranslatef(0.0, -5.0, 0.0);
-
     glBegin(GL_QUADS);
     glNormal3f( 1.0f, 0.0f, 0.0f); // normal X
     glTexCoord2f(0.0, 0.0);
-    glVertex3f(-size, 0, size);
-    glTexCoord2f(0.0, 2.0);
     glVertex3f(-size, 0, -size);
-    glTexCoord2f(2.0, 2.0);
+    glTexCoord2f(0.0, 10.0);
     glVertex3f(-size, size, -size);
-    glTexCoord2f(2.0, 0.0);
+    glTexCoord2f(10.0, 10.0);
     glVertex3f(-size, size, size);
+    glTexCoord2f(10.0, 0.0);
+    glVertex3f(-size, 0, size);
     glEnd();
     glPopMatrix();
     
@@ -77,55 +79,50 @@ void Interface::initFloorAndWalls() {
     // parede da direita
     glPushMatrix();
     glTranslatef(0.0, -5.0, 0.0);
-
     glBegin(GL_QUADS);
     glNormal3f( 0.0f, 0.0f, -1.0f); // normal -Z
     glTexCoord2f(0.0, 0.0);
-    glVertex3f(-size, size, size);
-    glTexCoord2f(0.0, 2.0);
     glVertex3f(size, size, size);
-    glTexCoord2f(2.0, 2.0);
+    glTexCoord2f(0.0, 10.0);
     glVertex3f(size, 0, size);
-    glTexCoord2f(2.0, 0.0);
+    glTexCoord2f(10.0, 10.0);
     glVertex3f(-size, 0, size);
+    glTexCoord2f(10.0, 0.0);
+    glVertex3f(-size, size, size);
     glEnd();
     glPopMatrix();
     
     // parede da frente
     glPushMatrix();
     glTranslatef(0.0, -5.0, 0.0);
-
     glBegin(GL_QUADS);
     glNormal3f(-1.0f, 0.0f, 0.0f); // normal -X
     glTexCoord2f(0.0, 0.0);
-    glVertex3f(size, size, size);
-    glTexCoord2f(0.0, 2.0);
     glVertex3f(size, size, -size);
-    glTexCoord2f(2.0, 2.0);
+    glTexCoord2f(0.0, 10.0);
     glVertex3f(size, 0, -size);
-    glTexCoord2f(2.0, 0.0);
+    glTexCoord2f(10.0, 10.0);
     glVertex3f(size, 0, size);
+    glTexCoord2f(10.0, 0.0);
+    glVertex3f(size, size, size);
     glEnd();
     glPopMatrix();
     
     // parede da esquerda
     glPushMatrix();
     glTranslatef(0.0, -5.0, 0.0);
-
     glBegin(GL_QUADS);
     glNormal3f( 0.0f, 0.0f, 1.0f); // normal Z
     glTexCoord2f(0.0, 0.0);
-    glVertex3f(size, size, -size);
-    glTexCoord2f(0.0, 2.0);
     glVertex3f(-size, size, -size);
-    glTexCoord2f(2.0, 2.0);
+    glTexCoord2f(0.0, 10.0);
     glVertex3f(-size, 0, -size);
-    glTexCoord2f(2.0, 0.0);
+    glTexCoord2f(10.0, 10.0);
     glVertex3f(size, 0, -size);
+    glTexCoord2f(10.0, 0.0);
+    glVertex3f(size, size, -size);
     glEnd();
     glPopMatrix();
-    
-    glEnable(GL_TEXTURE_2D);
     
     glEndList();	
 }

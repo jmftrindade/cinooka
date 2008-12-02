@@ -69,11 +69,16 @@
 #include <windows.h>
 #endif
 
+#ifdef __APPLE__
+#  include <OpenGL/gl.h>
+#else
+#  include <GL/gl.h>
+#endif
+
 #include <stdlib.h>
 // Do this to access M_PI, which is not officially part of the C/C++ standard.
 #define _USE_MATH_DEFINES 
 #include <math.h>
-#include <GL/gl.h>
 
 /* -- INTERFACE FUNCTIONS -------------------------------------------------- */
 
@@ -1234,7 +1239,12 @@ void renderSolidSierpinskiSponge ( int num_levels, GLdouble offset[3], GLdouble 
 #include <windows.h>
 #endif
 
-#include <GL/gl.h>
+#ifdef __APPLE__
+#  include <OpenGL/gl.h>
+#else
+#  include <GL/gl.h>
+#endif
+
 
 /* -- PRIVATE FUNCTIONS ---------------------------------------------------- */
 
