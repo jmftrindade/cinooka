@@ -19,11 +19,11 @@ void Table::init() {
 	GLUquadricObj *quadric;
 
 	//tableTextureId = loadTexture((char*) "images/table.sgi");
-	tableTextureId = LoadBitmap((char*) "images/table_frame.bmp");
-	upTableTextureId = LoadBitmap((char*) "images/green.bmp");
-	legTableTextureId = LoadBitmap((char*) "images/table_frame.bmp");
+	tableTextureId = loadTexture((char*) "images/table_frame.sgi");
+	upTableTextureId = loadTexture((char*) "images/green.sgi");
+	legTableTextureId = loadTexture((char*) "images/table_frame.sgi");
 
-	GLuint marbleTextureId = LoadBitmap((char*) "images/white_marble.bmp");
+	GLuint marbleTextureId = loadTexture((char*) "images/white_marble.sgi");
 
 	glBindTexture(GL_TEXTURE_2D, tableTextureId);
 

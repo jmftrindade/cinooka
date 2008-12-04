@@ -22,10 +22,9 @@ void Interface::init() {
 		b->init();
 		b->draw();
 	}
-	//floorTextureId = loadTexture((char*) "images/floor.sgi");
-	floorTextureId = LoadBitmap((char*) "images/tile.bmp");//red_carpet.bmp");
-	wallTextureId = LoadBitmap((char*) "images/wall06.bmp");
-	cueTextureId = LoadBitmap((char*) "images/wall_cue.bmp");
+	floorTextureId = loadTexture((char*) "images/floor.sgi");
+	wallTextureId = loadTexture((char*) "images/wall01.sgi");
+	cueTextureId = loadTexture((char*) "images/queue.sgi");
 	initFloorAndWalls();
 }
 

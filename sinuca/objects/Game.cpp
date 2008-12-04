@@ -347,10 +347,10 @@ void Game::setDirection(int key) {
 		shot.addAngle(-5.0);
 		break;
 	case GLUT_KEY_RIGHT:
-		shot.addAngle(1.0);
+		shot.addAngle(0.5);
 		break;
 	case GLUT_KEY_LEFT:
-		shot.addAngle(-1.0);
+		shot.addAngle(-0.5);
 		break;
 	case SPACE_KEY:
 		initShot();
@@ -431,7 +431,7 @@ void Game::processKey(int key) {
 					camera.up.x,camera.up.y,camera.up.z);
 		}
 	};
-	if (key == GLUT_KEY_F2)
+	if (key == 'n')
 		initializeGame();
 	switch (mode) {
 	case DIRECTION:

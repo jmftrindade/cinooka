@@ -9,10 +9,9 @@
 void Ball::init() {
 	//TODO carregar a textura de acordo com o numero da bola
 	std::ostringstream ballTexturePath;
-	ballTexturePath << "images/" << number << ".bmp";
-	ballTextureId = LoadBitmap((char*) ballTexturePath.str().c_str());
-	ballSphereMapTexId = LoadBitmap((char*) "images/sphere_map2.bmp");
-	//ballLightFlareTexId = LoadBitmap((char*) "images/lightflare.bmp");
+	ballTexturePath << "images/" << number << ".sgi";
+    ballTextureId = loadTexture((char*) ballTexturePath.str().c_str());
+	ballSphereMapTexId = loadTexture((char*) "images/sphere_map2.sgi");
 }
 
 void Ball::draw() {	

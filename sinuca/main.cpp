@@ -102,6 +102,10 @@ void keyboard(unsigned char key, int x, int y) {
 		game.processKey('j');
 	}
 
+        if (key == 'n') {
+		game.processKey('n');
+	}
+
 	// VIDEO_QUALITY:        
 	if (key == QUALITY_LOW) {
 		glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
