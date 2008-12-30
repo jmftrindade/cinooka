@@ -18,7 +18,6 @@ void Table::init() {
 	//table
 	GLUquadricObj *quadric;
 
-	//tableTextureId = loadTexture((char*) "images/table.sgi");
 	tableTextureId = loadTexture((char*) "images/table_frame.sgi");
 	upTableTextureId = loadTexture((char*) "images/green.sgi");
 	legTableTextureId = loadTexture((char*) "images/table_frame.sgi");
@@ -435,6 +434,7 @@ int Table::nearestHole(Point p) {
 	return 3;
 }
 
+// adaptado da implementacao de drawCube da glut -> adicionei coordenadas de textura :-)
 void Table::drawLeg(GLfloat size) {
 	static GLfloat n[6][3] =
 	{

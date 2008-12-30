@@ -16,7 +16,6 @@
 
 #define SPACE_KEY 32
 
-//#define NUM_BALLS 10 /*de 0(branca) a 9*/
 #define NUM_BALLS 16 /*de 0(branca) a 9*/
 
 enum MODE {

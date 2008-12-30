@@ -3,6 +3,8 @@
 // used in shadow plane
 #include "objects/Table.h"
 
+// based on nehe tutorial on shadow
+
 GLfloat no_mat[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 GLfloat mat_ambient[4] = {0.7f, 0.7f, 0.7f, 1.0f};
 GLfloat mat_ambient_color[4] = {0.8f, 0.8f, 0.2f, 1.0f};

@@ -143,7 +143,7 @@ void init_gl(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
 
-	glutCreateWindow("Sinuca");
+	glutCreateWindow("Cinooka");
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 
 	glutDisplayFunc(display);
@@ -168,7 +168,7 @@ void init_gl(int argc, char **argv) {
 	glEnable(GL_LIGHT0);                                // Enable Light 0
 	glEnable(GL_LIGHTING);                              // Enable Lighting
 
-	// Default Video quality = QUALITY_LOW
+	// Default Video quality = QUALITY_HIGH
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);//GL_FASTEST);
 	glHint(GL_POINT_SMOOTH_HINT          , GL_NICEST);//GL_FASTEST);
 	glHint(GL_LINE_SMOOTH_HINT           , GL_NICEST);//GL_FASTEST);

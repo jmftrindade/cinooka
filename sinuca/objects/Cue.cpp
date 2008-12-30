@@ -10,7 +10,6 @@ Cue::~Cue() {
 }
 
 void Cue::init() {
-	//cueTextureId = loadTexture((char*) "images/cue.sgi");
 	cueTextureId = loadTexture((char*) "images/queue.sgi");
 	cueId = gluNewQuadric();
 }

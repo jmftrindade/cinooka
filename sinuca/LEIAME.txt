@@ -1,0 +1,60 @@
+Integrantes: Daniel Beck
+	     Joana Trindade
+
+Página oficial do projeto: http://code.google.com/p/cinooka/
+
+
+= README = 
+
+1.) Regras do Jogo:
+
+- Assume-se que o primeiro jogador a dar a tacada é o jogador 1.
+- O jogador 1 deve encaçapar as bolas lisas, e o jogador 2 deve encaçapar as bolas listradas.
+- As seguintes jogadas resultam em violação e perda de uma bola para o adversário:
+	a. Errar em bola (e.g., bola branca não encostar em nenhuma).
+	b. Acertar bola do adversário.
+	c. Acertar a bola 8 sem ter encaçapado todas as bolas lisas (jogador 1) ou listradas (jogador 2).
+
+- As seguintes ações resultam em perda do jogo:
+	a. Encaçapar a bola preta sem ter encaçapado todas as bolas lisas (jogador 1) ou listradas (jogador 2).	
+
+- É declarado vencedor o primeiro jogador que conseguir encaçapar todas as bolas lisas (jogador 1) ou listradas (jogador 2) e encaçapar a bola preta.
+
+
+2.) Controles:
+
+   A. Mouse
+      O botão direito controla a câmera atual.
+
+   B. Teclado
+
+     -> Vídeo
+
+	'a' -> seta qualidade de vídeo para "low" (usa GL_FASTEST - ideal para placas com pouco poder de processamento).
+        's' -> seta qualidade de vídeo para "medium" (similar ao low, seta parâmetros de HINT para GL_DONT_CARE).
+        'd' -> seta qualidade de vídeo para "high" (melhor resolução, ideal para placas com melhor capacidade. usa GL_NICEST nos parâmetros de HINT).
+
+
+     -> Câmera
+
+        'o' -> zoom-in (O minúsculo)
+	'l' -> zoom-out (L minúsculo) 
+	'j' -> alterna entre as duas câmeras (vista centrada na mesa, e vista centrada na posição atual da bola branca). Recomenda-se setar a primeira câmera em vista aérea perpendicular a mesa, e com a segunda câmera dar zoom na bola e melhorar a mira. Assim pode-se alternar entre a visão aérea e a visão de mira apenas pressioando a tecla 'j'.
+	
+	
+     -> Taco
+     	'seta direcional cima' -> gira o taco no sentido anti-horário, com precisão de 3 graus por vez.
+	'seta direcional baixo' -> gira o taco no sentido horário, com precisão de 3 graus por vez.
+	'seta direcional lado esquerdo' -> gira o taco no sentido anti-horário, com precisão de 0.5 graus por vez.
+	'seta direcional lado esquerdo' -> gira o taco no sentido horário, com precisão de 0.5 graus por vez.
+ 	'barra de espaço' -> inicia a mira para a tacada se pressionada uma vez, e executa a tacada quando pressionada pela segunda vez.
+
+
+TODO
+- Declarar perdedor aquele que errar em bola quando tiver apenas a bola 8 por fazer.
+- Penalizar o jogador que encaçapar a bola branca.
+- Setar alpha na sombra das bolinhas.
+- Renderizar sombra para a mesa.
+- Menu inicial de jogo.
+- Desenhar na tela informações de jogo (atualmente isso é feito no console).
+- Fixar uma câmera em visão aérea da mesa por default.
